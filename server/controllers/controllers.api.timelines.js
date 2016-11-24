@@ -53,13 +53,15 @@ module.exports = {
             where: {
                 TempTimelineId: req.body.TempTimelineId
             }
-        }).then(Timeline.findOne({
-            where: {
-                TempTimelineId: req.body.TempTimelineId
-            }
-        }).then((data) => {
-            res.json(data)
-        })).catch((err) => {
+        }).then(() => {
+            Timeline.findOne({
+                where: {
+                    TempTimelineId: req.body.TempTimelineId
+                }
+            }).then((data) => {
+                res.json(data)
+            })
+        }).catch((err) => {
             res.json(err)
         })
     }
