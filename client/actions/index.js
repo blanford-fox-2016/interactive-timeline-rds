@@ -108,6 +108,37 @@ export function deleteTimeline(id){
     }
 }
 
-// export function editData(id, name, phone) {
-//     return {type: types.EDIT_DATA, id, name, phone}
-// }
+
+export function editDataTimeline(id, timeline){
+    return {type: types.EDIT_TIMELINE, id, timeline}
+}
+
+export function editTimelineFailure(){
+    return {type: types.EDIT_TIMELINES_FAILURE}
+}
+
+export function editTimelineSuccess(timeline){
+    return {type: types.EDIT_TIMELINES_SUCCESS, timeline}
+}
+
+export function editTimeline(id, timeline){
+    return dispatch => {
+        dispatch(editDataTimeline(id, timeline))
+        return request
+            .put(SERVER_URL)
+            .set('Accept', 'application/json')
+            .type('form')
+            .send({
+                TempTimelineId: id,
+                timeline: timeline
+            })
+            .end((err, res) => {
+                if(err){
+                    console.error(err);
+                    dispatch(editTimelineFailure())
+                }else{
+                    dispatch(editTimelineSuccess(res.body))
+                }
+            })
+    }
+}
