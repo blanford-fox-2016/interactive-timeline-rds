@@ -15,12 +15,39 @@ const Comments = models.Comments
 
 // get all timelines
 app.get('/api/timelines', (req, res) => {
-  Timelines.findAll()
+  Timelines.findAll({
+    include: [{
+      model: Users
+    }]
+  })
   .then((all_data, err) => {
       if(err){
         console.error(err);
       }else{
         res.json(all_data)
+      }
+  })
+})
+
+// get 1 username by timeline
+app.get('/api/timelines/:id', (req, res) => {
+  Timelines.findOne({
+    where: {
+      id: req.params.id
+    },
+    include: [{
+      model: Users
+    }]
+  })
+  .then((timeline, err) => {
+      if(err){
+        console.error(err);
+      }else{
+        res.json(timeline)
+        // timeline.getUsers().then((user, err) => {
+        //   console.log(user);
+        //   res.json({username: user.username})
+        // })
       }
   })
 })
@@ -31,11 +58,27 @@ app.post('/api/timelines', (req, res) => {
     UserId: 1, //default nanti sesuati user login
     content: req.body.content
   }).then((new_data, err) => {
-      if(err){
-        console.error(err);
-      }else{
-        res.json(new_data)
-      }
+    // console.log(new_data.id);
+    if(err){
+      console.error(err);
+    }else{
+      Timelines.findOne({
+        where: {
+          id: new_data.id
+        },
+        include: {
+          model: Users
+        }
+      }).then((timeline, err) => {
+        console.log(timeline.id);
+        if(err){
+          console.error(err);
+        }else{
+          // console.log(timeline);
+          res.json(timeline)
+        }
+      })
+    }
   })
 })
 
