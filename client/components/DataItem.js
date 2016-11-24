@@ -33,7 +33,7 @@ class DataItem extends Component {
 		if(!name || !post){
 			return ;
 		}
-		this.props.editData(this.props.data.id, name, post)
+		this.props.editPost(this.props.data.id, name, post)
 		this.setState({editing: false})
 	}
 
@@ -45,7 +45,7 @@ class DataItem extends Component {
 	}
 
 	render() {
-		const {data, deleteData, editData} = this.props
+		const {data, deletePost, editPost} = this.props
 		if(this.state.editing){
 			return(
 					<div className="well well-lg">
@@ -68,7 +68,7 @@ class DataItem extends Component {
 					<h2>{data.name}</h2>
 					<h5>{data.post}</h5>
 					<div className="btn btn-sm btn-warning" onClick={this.handleEditClick.bind(this)}>Edit</div>
-					<div className="btn btn-sm btn-danger" onClick={() => confirm("Yakin?") === true ? deleteData(data.id) : false}>Delete</div>
+					<div className="btn btn-sm btn-danger" onClick={() => confirm("Yakin?") === true ? deletePost(data.id) : false}>Delete</div>
 				</div>
 				)
 		}
@@ -77,8 +77,8 @@ class DataItem extends Component {
 
 DataItem.propTypes = {
 	data: PropTypes.object.isRequired,
-	deleteData: PropTypes.func.isRequired,
-	editData: PropTypes.func.isRequired
+	deletePost: PropTypes.func.isRequired,
+	editPost: PropTypes.func.isRequired
 }
 
 export default DataItem

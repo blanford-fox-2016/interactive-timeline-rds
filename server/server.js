@@ -43,18 +43,38 @@ app.delete('/api/timeline', function(req, res) {
     var timeline = JSON.parse(data)
 
     for (var i = 0; i < timeline.length; i++) {
-      if (timeline[i].id == req.body.id) {
-          timeline.splice(i,1)
-          fs.writeFile(TIMELINE_FILE, JSON.stringify(timeline, null, 4), function(err) {
-              if (err) {
-                  console.log(err);
-              } else {
-                  res.json(timeline)
-              }
-          })
-      } else {
-        res.json({'message': 'data not found'})
-      }
+        if (timeline[i].id == req.body.id) {
+            timeline.splice(i, 1)
+            fs.writeFile(TIMELINE_FILE, JSON.stringify(timeline, null, 4), function(err) {
+                if (err) {
+                    console.log(err);
+                    res.json({ 'message': 'data not found' })
+                } else {
+                    res.json(timeline)
+                }
+            })
+        }
+    }
+})
+
+app.put('/api/timeline', function(req, res) {
+    var data = fs.readFileSync(TIMELINE_FILE)
+    var timeline = JSON.parse(data)
+
+    for (var i = 0; i < timeline.length; i++) {
+        if (timeline[i].id == req.body.id) {
+            timeline[i].name = req.body.name
+            timeline[i].post = req.body.post
+
+            fs.writeFile(TIMELINE_FILE, JSON.stringify(timeline, null, 4), function(err) {
+                if (err) {
+                    console.log(err);
+                    res.json({'message': 'data not found'})
+                } else {
+                    res.json(timeline)
+                }
+            })
+        }
     }
 })
 

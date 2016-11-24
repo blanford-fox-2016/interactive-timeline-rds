@@ -43,8 +43,8 @@ class ListItem extends Component{
 
 		let dataNodes = filteredData.map(function(item){
 			return(
-				<DataItem key={item.id} data={item} {...actions}/>
-				//...actions sama dengan deleteData={actions.deleteData} editData={actions.editData}
+				<DataItem key={item.id} data={item} deletePost={actions.deletePost} editPost={actions.editPost}/>
+				//...actions sama dengan deleteData={actions.deleteData} editData={actions.editData}.
 			)
 		})
 		return(

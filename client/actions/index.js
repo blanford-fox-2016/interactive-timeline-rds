@@ -3,10 +3,6 @@ import request from 'superagent'
 
 const SERVER_URL = 'http://localhost:8080/api/timeline'
 
-export function editData(id, name, post){
-  return {type: types.EDIT_DATA, id, name, post}
-}
-
 //LOAD DATAS
 
 export function loadData(){
@@ -44,8 +40,8 @@ export function addData(id, name, post){
   return {type: types.ADD_DATA, id, name, post}
 }
 
-export function addPostFailure(){
-	return {type: types.ADD_POST_FAILURE}
+export function addPostFailure(id){
+	return {type: types.ADD_POST_FAILURE, id}
 }
 
 export function addPostSuccess(post){
@@ -64,7 +60,7 @@ export function addPost(name,post){
 		.end((err, res) => {
 			if(err) {
 				console.error(err)
-				dispatch(addPostFailure())
+				dispatch(addPostFailure(id))
 			} else {
 				dispatch(addPostSuccess(res.body))
 			}
@@ -78,14 +74,6 @@ export function deleteData(id){
   return {type: types.DELETE_DATA, id}
 }
 
-export function deletePostSuccess(post){
-	return {type: types.DELETE_POST_SUCCESS, post}
-}
-
-export function deletePostFailure(){
-	return {type: types.DELETE_POST_FAILURE}
-}
-
 export function deletePost(id){
 	return dispatch => {
 		dispatch(deleteData(id))
@@ -96,9 +84,32 @@ export function deletePost(id){
 		.end((err, res) => {
 			if(err) {
 				console.error(err)
-				dispatch(deletePostFailure())
 			} else {
-				dispatch(deletePostSuccess(res.body))
+				dispatch(loadTimeline())
+			}
+		})
+	}
+}
+
+//EDIT DATA
+
+export function editData(id, name, post){
+  return {type: types.EDIT_DATA, id, name, post}
+}
+
+export function editPost(id,name,post){
+	return dispatch => {
+		dispatch(editData(id,name,post))
+		return request
+		.put(SERVER_URL)
+		.set('Accept', 'application/json')
+		.type('form')
+		.send({id:id, name:name, post:post})
+		.end((err,res) => {
+			if(err) {
+				console.error(err)
+			} else {
+				dispatch(loadTimeline())
 			}
 		})
 	}
