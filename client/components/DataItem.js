@@ -40,7 +40,7 @@ export default class DataItem extends Component{
         <form onSubmit={this.handleSaveEdit.bind(this)}>
           <input className="form-control" type="text" placeholder="name" value={this.state.name} onChange={this.handleNameChange.bind(this)}/>
           <input className="form-control" type="text" placeholder="phone" value={this.state.phone} onChange={this.handlePhoneChange.bind(this)}/>
-          <button className="btn btn-md btn-warning" type='sumbit'> Save</button>
+          <button className="btn btn-md btn-warning" type='sumbit'>Save</button>
         </form>
       )
     } else {

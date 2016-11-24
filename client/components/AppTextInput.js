@@ -34,8 +34,8 @@ export default class AppTextInput extends Component {
       <h2>Input</h2>
       <form onSubmit={this.handleSubmit.bind(this)}>
         <input className="form-control" type="text" placeholder="name" value={this.state.name} onChange={this.handleNameChange.bind(this)}/>
-        <input className="form-control" type="text" placeholder="phone" value={this.state.phone} onChange={this.handlePhoneChange.bind(this)}/>
-        <button className="btn btn-md btn-primary"type='sumbit'> Save</button>
+        <input className="form-control" type="textarea" placeholder="comment" value={this.state.phone} onChange={this.handlePhoneChange.bind(this)} />
+        <button className="btn btn-md btn-primary"type='sumbit'> Post Timeline</button>
       </form>
     </div>
     )

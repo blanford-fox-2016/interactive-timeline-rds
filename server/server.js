@@ -12,7 +12,7 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 
-app.get('/api/phonebooks', function(req, res) {
+app.get('/api/timelines', function(req, res) {
   fs.readFile(PHONEBOOK_FILES, function(err, data) {
     if(err) {
       console.error(err)
@@ -21,7 +21,7 @@ app.get('/api/phonebooks', function(req, res) {
   })
 })
 
-app.post('/api/phonebooks', function(req, res) {
+app.post('/api/timelines', function(req, res) {
   fs.readFile(PHONEBOOK_FILES, function(err, data) {
     if(err) {
       console.error(err)

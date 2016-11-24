@@ -1,7 +1,7 @@
 import * as types from '../constants/ActionTypes'
 import request from 'superagent'
 
-const SERVER_URL = 'http://localhost:8000/api/phonebooks'
+const SERVER_URL = 'http://localhost:8000/api/timelines'
 
 export function addData(id, name, phone) {
   return {type: types.ADD_DATA, name, phone}
