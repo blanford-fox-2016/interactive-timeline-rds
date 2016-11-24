@@ -76,10 +76,10 @@ export function addTimeline(UserId, timeline) {
     }
 }
 
-// export function deleteData(id) {
-//     return {type: types.DELETE_DATA, id}
-// }
-//
+export function deleteTimeline(id) {
+    return {type: types.DELETE_TIMELINE, id}
+}
+
 // export function editData(id, name, phone) {
 //     return {type: types.EDIT_DATA, id, name, phone}
 // }

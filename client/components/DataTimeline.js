@@ -5,10 +5,20 @@ class DataItem extends Component {
         super(props)
     }
 
+    clickDeleteTimeline() {
+        if (confirm("are you sure want ti delete")) {
+            console.log(this.props.timelineReducers.TempTimelineId)
+            this.props.deleteTimeline(this.props.timelineReducers.TempTimelineId)
+        }
+    }
+
     render() {
         const {timelineReducers} = this.props
         return (
             <div className="panel panel-default">
+                <div className="panel-heading">
+                    <button onClick={this.clickDeleteTimeline.bind(this)} className="btn btn-danger">Delete</button>
+                </div>
                 <div className="panel-body">
                     <h3>{timelineReducers.User.username}</h3>
                     <p>{timelineReducers.timeline}</p>

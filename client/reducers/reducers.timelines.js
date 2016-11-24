@@ -43,9 +43,10 @@ export default function timeline(state = initialState, action) {
                 return [action.timeline, ...state]
             }
 
-        // case DELETE_TIMELINE:
-        //     return state.filter(TIMELINE => TIMELINE.id !== action.id)
-        //
+        case DELETE_TIMELINE:
+            // return state.filter((timeline) => timeline.id !== action.id)
+            return console.log(action)
+
         // case EDIT_TIMELINE:
         //     return state.map(TIMELINE => TIMELINE.id === action.id ? Object.assign({}, TIMELINE, {name: action.name, phone: action.phone}) : TIMELINE)
         //
