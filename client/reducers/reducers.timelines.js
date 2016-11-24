@@ -1,6 +1,8 @@
 import {
     ADD_TIMELINE,
     DELETE_TIMELINE,
+    DELETE_TIMELINE_SUCCESS,
+    DELETE_TIMELINE_FAILURE,
     EDIT_TIMELINE,
     LOAD_TIMELINES_SUCCESS,
     LOAD_TIMELINES_FAILURE,
@@ -44,14 +46,17 @@ export default function timeline(state = initialState, action) {
             }
 
         case DELETE_TIMELINE:
-            // return state.filter((timeline) => timeline.id !== action.id)
-            return console.log(action)
+            return state.filter((timeline) => timeline.TempTimelineId !== action.id)
+
+        case DELETE_TIMELINE_SUCCESS:
+            return state
 
         // case EDIT_TIMELINE:
         //     return state.map(TIMELINE => TIMELINE.id === action.id ? Object.assign({}, TIMELINE, {name: action.name, phone: action.phone}) : TIMELINE)
         //
         case LOAD_TIMELINES_FAILURE:
         case ADD_TIMELINE_FAILURE:
+        case DELETE_TIMELINE_FAILURE:
             return state
 
         default:

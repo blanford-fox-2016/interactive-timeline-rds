@@ -7,7 +7,6 @@ class DataItem extends Component {
 
     clickDeleteTimeline() {
         if (confirm("are you sure want ti delete")) {
-            console.log(this.props.timelineReducers.TempTimelineId)
             this.props.deleteTimeline(this.props.timelineReducers.TempTimelineId)
         }
     }

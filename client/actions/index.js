@@ -76,8 +76,36 @@ export function addTimeline(UserId, timeline) {
     }
 }
 
-export function deleteTimeline(id) {
+export function deleteData(id){
     return {type: types.DELETE_TIMELINE, id}
+}
+
+
+export function deleteTimelineFailure(){
+    return {type: types.DELETE_TIMELINE_FAILURE}
+}
+
+export function deleteTimelineSuccess(timeline){
+    return {type: types.DELETE_TIMELINE_SUCCESS, timeline}
+}
+
+export function deleteTimeline(id){
+    return dispatch => {
+        dispatch(deleteData(id))
+        return request
+            .del(SERVER_URL)
+            .send({
+                TempTimelineId: id
+            })
+            .end((err, res) => {
+                if(err){
+                    console.error(err);
+                    dispatch(deleteTimelineFailure())
+                }else{
+                    dispatch(deleteTimelineSuccess(res.body))
+                }
+            })
+    }
 }
 
 // export function editData(id, name, phone) {
