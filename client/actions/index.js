@@ -7,8 +7,8 @@ const TIMELINES_URL = 'http://localhost:3000/api/timelines/'
 // addData
 // --------------------------------
 
-export function addData(id, content, User){
-  return {type: types.ADD_TIMELINE, id, content, User}
+export function addData(content, User){
+  return {type: types.ADD_TIMELINE, content, User}
 }
 
 export function addTimelineFailure(){
@@ -20,15 +20,15 @@ export function addTimelineSuccess(timeline){
 }
 
 export function addTimeline(content){
-  //temporary id
-  var id = Date.now()
+  //temporary id khusus kalau pake id date now dari awal
+  // var id = Date.now().toString()
   //temporary user
   var User = {
     username: 'temp',
     email: 'temp@temp.com'
   }
   return dispatch => {
-    dispatch(addData(id, content, User))
+    dispatch(addData(content, User))
     return request
           .post(TIMELINES_URL)
           .set('Accept', 'application/json')

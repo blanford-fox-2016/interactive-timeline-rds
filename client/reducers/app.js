@@ -23,25 +23,31 @@ export default function data(state = initialState, action){
       return action.timelines.reverse()
 
     case ADD_TIMELINE:
-      return [{
-        id: action.id,
-        User: action.User,
-        content: action.content
-      },
-      ...state
-      ]
+    console.log(state);
+    return state
+      // return [{
+      //   id: state[0].id+1,
+      //   User: action.User,
+      //   content: action.content
+      // },
+      // ...state
+      // ]
 
     case ADD_TIMELINES_SUCCESS:
-    let timelines = state
-    let idObject = timelines.map(function(x){
-      return x.id
-    }).indexOf(action.timeline.id)
-    console.log(state);
-    if(idObject > -1){
-      return state
-    }else{
-      return [action.timeline, ...state]
-    }
+      let timelines = state
+      let idObject = timelines.map(function(x){
+        return x.id
+      }).indexOf(action.timeline.id)
+      // console.log(state);
+      // console.log(action.timeline);
+      // console.log(idObject);
+      if(idObject > -1){
+        // state.splice(idObject, 1)
+        // console.log(state);
+        return state
+      }else{
+        return [action.timeline, ...state]
+      }
 
     case EDIT_TIMELINE:
       return state.map(data => data.id === action.id ? Object.assign({}, data, {content: action.content}): data)
