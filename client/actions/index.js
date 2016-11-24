@@ -48,18 +48,18 @@ export function addTimelineSuccess(timeline) {
 }
 
 export function addTimeline(UserId, timeline) {
-    let id = Date.now().toString()
+    const TempTimelineId = Date.now().toString()
     let User = {
         id: UserId,
         username: 'admin'
     }
     return dispatch => {
-        dispatch(addDataTimeline(id, User, timeline))
+        dispatch(addDataTimeline(TempTimelineId, User, timeline))
         return request
             .post(SERVER_URL)
             .type('form')
             .send({
-                tempTimelineId: id,
+                TempTimelineId: TempTimelineId,
                 timeline: timeline,
                 UserId: User.id
             })

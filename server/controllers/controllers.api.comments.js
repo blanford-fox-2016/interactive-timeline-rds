@@ -1,23 +1,28 @@
 const models = require('../models')
 const Timeline = models.Timeline
+const Comment = models.Comment
 const User = models.User
 
 module.exports = {
-    createTimeline: (req, res) => {
-        Timeline.create({
-            TempTimelineId: req.body.TempTimelineId,
-            timeline: req.body.timeline,
+    createComment: (req, res) => {
+        Comment.create({
+            TempCommentId: req.body.TempCommentId,
+            comment: req.body.comment,
+            TimelineId: req.body.TimelineId,
             UserId: req.body.UserId
         }).then((data) => {
-            Timeline.findOne({
+            Comment.findOne({
                 include: [
                     {
                         model: User
+                    },
+                    {
+                        model: Timeline
                     }
                 ],
 
                 where: {
-                    TempTimelineId: data.TempTimelineId
+                    TempCommentId: data.TempCommentId
                 }
             }).then((data) => {
                 res.json(data)
@@ -27,11 +32,14 @@ module.exports = {
         })
     },
 
-    getAllTimeline: (req, res) => {
-        Timeline.findAll({
+    getAllComments: (req, res) => {
+        Comment.findAll({
             include: [
                 {
                     model: User
+                },
+                {
+                    model: Timeline
                 }
             ],
 
@@ -46,10 +54,10 @@ module.exports = {
         })
     },
 
-    getTimelineById: (req, res) => {
-        Timeline.findOne({
+    getCommentById: (req, res) => {
+        Comment.findOne({
             where: {
-                TempTimelineId: req.body.TempTimelineId
+                TempCommentId: req.body.TempCommentId
             }
         }).then((data) => {
             res.json(data)
@@ -58,10 +66,10 @@ module.exports = {
         })
     },
 
-    deleteTimeline: (req, res) => {
-        Timeline.destroy({
+    deleteComment: (req, res) => {
+        Comment.destroy({
             where: {
-                TempTimelineId: req.body.TempTimelineId
+                TempCommentId: req.body.TempCommentId
             }
         }).then((data) => {
             res.json(data)
@@ -70,17 +78,17 @@ module.exports = {
         })
     },
 
-    updateTimeline: (req, res) => {
-        Timeline.update({
-            timeline: req.body.timeline,
+    updateComment: (req, res) => {
+        Comment.update({
+            comment: req.body.comment,
         }, {
             where: {
-                TempTimelineId: req.body.TempTimelineId
+                TempCommentId: req.body.TempCommentId
             }
         }).then(() => {
-            Timeline.findOne({
+            Comment.findOne({
                 where: {
-                    TempTimelineId: req.body.TempTimelineId
+                    TempCommentId: req.body.TempCommentId
                 }
             }).then((data) => {
                 res.json(data)
