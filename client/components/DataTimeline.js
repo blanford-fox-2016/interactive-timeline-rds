@@ -10,8 +10,17 @@ class DataItem extends Component {
         return (
             <div className="panel panel-default">
                 <div className="panel-body">
+                    <h3>{timelineReducers.User.username}</h3>
                     <p>{timelineReducers.timeline}</p>
-                    <p>{timelineReducers.UserId}</p>
+                </div>
+                <div className="panel-footer">
+                    <form className="form-inline">
+                        <div className="form-group">
+                            <label>Photo</label>
+                            <input type="text" className="form-control" />
+                        </div>
+                        <button type="submit" className="btn btn-default">Submit</button>
+                    </form>
                 </div>
             </div>
         )
@@ -19,8 +28,7 @@ class DataItem extends Component {
 }
 
 DataItem.propTypes = {
-    timelineReducers: PropTypes.array.isRequired,
-    actions: PropTypes.object.isRequired
+    timelineReducers: PropTypes.array.isRequired
 }
 
 export default DataItem

@@ -1,5 +1,6 @@
 const models = require('../models')
 const Timeline = models.Timeline
+const User = models.User
 
 module.exports = {
     createTimeline: (req, res) => {
@@ -8,14 +9,37 @@ module.exports = {
             timeline: req.body.timeline,
             UserId: req.body.UserId
         }).then((data) => {
-            res.json(data)
+            Timeline.findOne({
+                include: [
+                    {
+                        model: User
+                    }
+                ],
+
+                where: {
+                    TempTimelineId: data.TempTimelineId
+                }
+            }).then((data) => {
+                res.json(data)
+            })
         }).catch((err) => {
             res.json(err)
         })
     },
 
     getAllTimeline: (req, res) => {
-        Timeline.findAll().then((data) => {
+        Timeline.findAll({
+            include: [
+                {
+                    model: User
+                }
+            ],
+
+            order: [
+                ['createdAt', 'DESC']
+            ]
+        }).then((data) => {
+            console.log(data)
             res.json(data)
         }).catch((err) => {
             res.json(err)

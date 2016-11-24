@@ -18,30 +18,31 @@ export default function timeline(state = initialState, action) {
             return []
 
         case LOAD_TIMELINES_SUCCESS:
-            // console.log(action.timeline)
             return action.timeline
 
-        // case ADD_TIMELINE:
-        //     return [
-        //         {
-        //             id: action.id,
-        //             name: action.name,
-        //             phone: action.phone
-        //         },
-        //         ...state
-        //     ]
-        //
-        // case ADD_PHONEBOOK_SUCCES:
-        //     let idObject = state.map(function (x) {
-        //         return x.id
-        //     }).indexOf(action.phonebook.id)
-        //     if (idObject > -1) {
-        //         return state
-        //     }
-        //     else {
-        //         return [action.phonebook, ...state]
-        //     }
-        //
+        case ADD_TIMELINE:
+            console.log("di add>>> ", action.User)
+            return [
+                {
+                    id: action.id,
+                    timeline: action.timeline,
+                    User: action.User
+                },
+                ...state
+            ]
+
+        case ADD_TIMELINE_SUCCESS:
+            console.log("di success>>> ", state)
+            let idObject = state.map(function (x) {
+                return x.id
+            }).indexOf(action.timeline.id)
+            if (idObject > -1) {
+                return state
+            }
+            else {
+                return [action.timeline, ...state]
+            }
+
         // case DELETE_TIMELINE:
         //     return state.filter(TIMELINE => TIMELINE.id !== action.id)
         //
@@ -49,7 +50,7 @@ export default function timeline(state = initialState, action) {
         //     return state.map(TIMELINE => TIMELINE.id === action.id ? Object.assign({}, TIMELINE, {name: action.name, phone: action.phone}) : TIMELINE)
         //
         case LOAD_TIMELINES_FAILURE:
-        // case ADD_PHONEBOOK_FAILURE:
+        case ADD_TIMELINE_FAILURE:
             return state
 
         default:

@@ -35,47 +35,51 @@ export function loadTimelines() {
     }
 }
 
-// export function addData(id, name, phone) {
-//     return {type: types.ADD_DATA, id, name, phone}
-// }
-//
+export function addDataTimeline(id, User, timeline) {
+    return {type: types.ADD_TIMELINE, id, User, timeline}
+}
+
+export function addTimelineFailure() {
+    return {type: types.ADD_TIMELINE_FAILURE}
+}
+
+export function addTimelineSuccess(timeline) {
+    return {type: types.ADD_TIMELINE_SUCCESS, timeline}
+}
+
+export function addTimeline(UserId, timeline) {
+    let id = Date.now().toString()
+    let User = {
+        id: UserId,
+        username: 'admin'
+    }
+    return dispatch => {
+        dispatch(addDataTimeline(id, User, timeline))
+        return request
+            .post(SERVER_URL)
+            .type('form')
+            .send({
+                tempTimelineId: id,
+                timeline: timeline,
+                UserId: User.id
+            })
+            .set('Accept', 'application/json')
+            .end((err, res) => {
+                if (err) {
+                    console.error(err)
+                    dispatch(addTimelineFailure())
+                }
+                else {
+                    dispatch(addTimelineSuccess(res.body))
+                }
+            })
+    }
+}
+
 // export function deleteData(id) {
 //     return {type: types.DELETE_DATA, id}
 // }
 //
 // export function editData(id, name, phone) {
 //     return {type: types.EDIT_DATA, id, name, phone}
-// }
-
-// export function addPhoneBookFailure() {
-//     return {type: types.ADD_PHONEBOOKS_FAILURE}
-// }
-//
-// export function addPhoneBookSuccess(phonebook) {
-//     return {type: types.ADD_PHONEBOOKS_SUCCESS, phonebook}
-// }
-//
-// export function addPhoneBook(name, phone) {
-//     let id = Date.now().toString()
-//     return dispatch => {
-//         dispatch(addData(id, name, phone))
-//         return request
-//             .post(SERVER_URL)
-//             .type('form')
-//             .send({
-//                 id: id,
-//                 name: name,
-//                 phone: phone
-//             })
-//             .set('Accept', 'application/json')
-//             .end((err, res) => {
-//                 if (err) {
-//                     console.error(err)
-//                     dispatch(addPhoneBookFailure())
-//                 }
-//                 else {
-//                     dispatch(addPhoneBookSuccess(res.body))
-//                 }
-//             })
-//     }
 // }
