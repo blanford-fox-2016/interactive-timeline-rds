@@ -17,7 +17,7 @@ export default class ListItem extends Component {
             return (<DataItem key={item.id} data={item} {...actions}/>)
         })
         return (
-            <div className="container datalist">
+            <div className="datalist">
                 {dataNodes}
             </div>
         )
