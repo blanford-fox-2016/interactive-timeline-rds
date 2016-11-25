@@ -15,7 +15,8 @@ export default function data(state = initialState, objFromUserAction){
     ...state
   ]
     case EDIT_POST:
-    return state.map(cb_result => cb_result.id === objFromUserAction.id ? Object.assign({}, cb_result, {name: objFromUserAction.name, phone: objFromUserAction.phone}): cb_result)
+    console.log('edit post :', objFromUserAction);
+    return state.map(cb_result => cb_result.id === objFromUserAction.id ? Object.assign({}, cb_result, {content: objFromUserAction.content}): cb_result)
 
     case DELETE_POST:
     return state.filter(cb_result => cb_result.id !== objFromUserAction.id)

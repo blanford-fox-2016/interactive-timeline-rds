@@ -1,8 +1,10 @@
-import {createStore} from 'redux'
+import {createStore, applyMiddleware, compose} from 'redux'
 import rootReducer from '../reducers'
+import thunkMiddleware from 'redux-thunk';
 
 export default function configureStore(initialStateParameter){
-  const store = createStore(rootReducer, initialStateParameter)
+  const enhancer = compose(applyMiddleware(thunkMiddleware))
+  const store = createStore(rootReducer, initialStateParameter, enhancer)
 
   if(module.hot){
     module.hot.accept('../reducers', () => {

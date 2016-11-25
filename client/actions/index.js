@@ -1,7 +1,6 @@
 import * as types from '../constants/ActionTypes'
 
 export function addPost(contentParameter){
-  console.log('folder action: ',contentParameter);
   return {type: types.ADD_POST, content: contentParameter}
 }
 

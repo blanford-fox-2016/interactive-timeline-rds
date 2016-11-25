@@ -8,8 +8,8 @@ class DataItem extends Component {
       content: this.props.data.content || ''
     }
   }
-  handleNameChange(e) {
-    this.setState({name: e.target.value})
+  handleContentChange(e) {
+    this.setState({content: e.target.value})
   }
   handleEditClick(){
     this.setState({editing: true})
@@ -31,7 +31,7 @@ class DataItem extends Component {
         <form onSubmit={this.handleSaveEdit.bind(this)}>
           <div className="form-group">
             <label>Edit Content</label>
-            <input type="text" className="form-control" id="form-content" placeholder="Enter New Content" value={this.state.content} onChange={this.handleNameChange.bind(this)} />
+            <input type="text" className="form-control" id="form-content" placeholder="Enter New Content" value={this.state.content} onChange={this.handleContentChange.bind(this)} />
           </div>
           <button className="btn btn-success" type="submit"><span className="glyphicon glyphicon-plus"></span>   Edit Content</button>
         </form>

@@ -9,12 +9,10 @@ export default class FormAdd extends Component {
   }
   handleContentChange(e) {
     this.setState({content: e.target.value})
-    console.log(this.state);
   }
   handleSubmit(e) {
     e.preventDefault()
     let content = this.state.content.trim()
-    console.log('content :', content);
     if (!content) {
       console.log('fail');
       return ;
