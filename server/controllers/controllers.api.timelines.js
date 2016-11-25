@@ -1,5 +1,6 @@
 const models = require('../models')
 const Timeline = models.Timeline
+const Comment = models.Comment
 const User = models.User
 
 module.exports = {
@@ -32,6 +33,10 @@ module.exports = {
             include: [
                 {
                     model: User
+                },
+                {
+                    model: Comment,
+                    include: [{model:User}]
                 }
             ],
 
@@ -39,7 +44,6 @@ module.exports = {
                 ['createdAt', 'DESC']
             ]
         }).then((data) => {
-            console.log(data)
             res.json(data)
         }).catch((err) => {
             res.json(err)

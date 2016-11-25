@@ -2,6 +2,7 @@ import * as types from '../constant/ActionTypes'
 import request from 'superagent'
 
 const SERVER_URL = 'http://localhost:3000/api/timelines'
+const SERVER_UR_COMMENTS = 'http://localhost:3000/api/comments'
 
 
 export function loadTimeline() {
@@ -114,11 +115,11 @@ export function editDataTimeline(id, timeline){
 }
 
 export function editTimelineFailure(){
-    return {type: types.EDIT_TIMELINES_FAILURE}
+    return {type: types.EDIT_TIMELINE_FAILURE}
 }
 
 export function editTimelineSuccess(timeline){
-    return {type: types.EDIT_TIMELINES_SUCCESS, timeline}
+    return {type: types.EDIT_TIMELINE_SUCCESS, timeline}
 }
 
 export function editTimeline(id, timeline){
@@ -138,6 +139,42 @@ export function editTimeline(id, timeline){
                     dispatch(editTimelineFailure())
                 }else{
                     dispatch(editTimelineSuccess(res.body))
+                }
+            })
+    }
+}
+
+
+
+
+
+export function loadComment() {
+    return {type: types.LOAD_COMMENTS}
+}
+
+export function loadCommentSuccess(comment) {
+    return {type: types.LOAD_COMMENTS_SUCCESS, comment: comment}
+}
+
+export function loadCommentFailure() {
+    return {type: types.LOAD_COMMENTS_FAILURE}
+}
+
+
+export function loadComments() {
+    return dispatch => {
+        dispatch(loadComment())
+        return request
+            .get(SERVER_UR_COMMENTS)
+            .set('Accept', 'application/json')
+            .end((err, res) => {
+                if (err) {
+                    console.error(err)
+                    dispatch(loadCommentFailure())
+                }
+                else {
+                    // console.log("dari action: ", res.body)
+                    dispatch(loadCommentSuccess(res.body))
                 }
             })
     }

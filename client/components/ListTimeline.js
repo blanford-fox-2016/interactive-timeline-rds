@@ -9,11 +9,13 @@ export default class ListItem extends Component {
 
 
     render() {
-        // console.log("asd")
 
         const {timelineReducers, actions} = this.props
 
+        // console.log("dari listtimeine: ", timelineReducers)
+
         let timelineNodes = timelineReducers.map(function (item) {
+
             return(
                 <DataTimeline key={item.id} timelineReducers={item} {...actions} />
             )

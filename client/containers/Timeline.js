@@ -9,10 +9,12 @@ class Timeline extends Component {
 
     componentDidMount() {
         this.props.actions.loadTimelines()
+        this.props.actions.loadComments()
     }
 
     render() {
         const {timelineReducers, actions} = this.props
+        // console.log("Dari timeline: ", commentReducers)
         return(
             <div className="container">
 
@@ -44,11 +46,15 @@ class Timeline extends Component {
 
 Timeline.propTypes = {
     timelineReducers: PropTypes.array.isRequired,
+    commentReducers: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired
 }
 
 function mapStateToProps(state) {
-    return {timelineReducers: state.timelineReducers}
+    return {
+        timelineReducers: state.timelineReducers,
+        commentReducers: state.commentReducers
+    }
 }
 
 function mapDispatchToProps(dispatch) {

@@ -1,4 +1,8 @@
 import React, {Component, PropTypes} from 'react'
+import {bindActionCreators} from 'redux'
+import {connect} from 'react-redux'
+import * as AppActions from '../actions'
+import ListComment from './ListComment'
 
 class DataItem extends Component {
     constructor(props) {
@@ -6,6 +10,7 @@ class DataItem extends Component {
         this.state = {
             editing: false,
             timeline: this.props.timelineReducers.timeline || '',
+            comment: this.props.timelineReducers.comment || '',
         }
     }
 
@@ -45,9 +50,15 @@ class DataItem extends Component {
         })
     }
 
+    handleCommentChange(e) {
+        this.setState({
+            comment: e.target.value
+        })
+    }
+
 
     render() {
-        const {timelineReducers, deleteData, editData} = this.props
+        const {timelineReducers, commentReducers} = this.props
         if (this.state.editing) {
             return(
                 <div className="panel panel-default">
@@ -66,7 +77,7 @@ class DataItem extends Component {
                         <form className="form-inline">
                             <div className="form-group">
                                 <label>Photo</label>
-                                <input type="text" className="form-control" />
+                                <input value={this.state.timeline} onChange={this.handleCommentChange.bind(this)} type="text" className="form-control" />
                             </div>
                             <button type="submit" className="btn btn-default">Submit</button>
                         </form>
@@ -75,6 +86,7 @@ class DataItem extends Component {
             )
         }
         else {
+            // console.log("dari data timeline: ", timelineReducers.Comments)
             return (
                 <div className="panel panel-default">
                     <div className="panel-heading">
@@ -82,8 +94,27 @@ class DataItem extends Component {
                         <button onClick={this.clickEditTimeline.bind(this)} className="btn btn-warning">Edit</button>
                     </div>
                     <div className="panel-body">
-                        <h3>{timelineReducers.User.username}</h3>
-                        <p>{timelineReducers.timeline}</p>
+
+                        <div className="panel-group">
+                            <div className="panel panel-default">
+                                <div className="panel-heading">
+                                    <div className="panel-title">
+                                        <h3>
+                                            <a data-toggle="collapse" href={'#collapse'+timelineReducers.id}>
+                                                {timelineReducers.User.username}
+                                            </a>
+                                        </h3>
+                                        <p>{timelineReducers.timeline}</p>
+                                    </div>
+                                </div>
+                                <div id={'collapse'+timelineReducers.id} className={timelineReducers.Comments.length !=0  ? "panel-collapse collapse in" : "panel-collapse collapse"}>
+                                    <div className="panel-body">
+                                        <ListComment commentReducers={timelineReducers.Comments} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <div className="panel-footer">
                         <form className="form-inline">
@@ -102,7 +133,24 @@ class DataItem extends Component {
 }
 
 DataItem.propTypes = {
-    timelineReducers: PropTypes.array.isRequired
+    timelineReducers: PropTypes.array.isRequired,
+    // commentReducers: PropTypes.array.isRequired
 }
 
+// function mapStateToProps(state) {
+//     return {
+//         timelineReducers: state.timelineReducers,
+//         // commentReducers: state.commentReducers
+//     }
+// }
+//
+// function mapDispatchToProps(dispatch) {
+//     return {actions: bindActionCreators(AppActions, dispatch)}
+// }
+
 export default DataItem
+
+// export default connect(
+//     mapStateToProps,
+//     mapDispatchToProps
+// )(DataItem)
