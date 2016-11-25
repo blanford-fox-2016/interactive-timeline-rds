@@ -16,6 +16,9 @@ import {
     ADD_COMMENT,
     ADD_COMMENT_SUCCESS,
     ADD_COMMENT_FAILURE,
+    DELETE_COMMENT,
+    DELETE_COMMENT_SUCCESS,
+    DELETE_COMMENT_FAILURE,
 
 } from '../constant/ActionTypes'
 
@@ -61,6 +64,7 @@ export default function timeline(state = initialState, action) {
             }
 
         case DELETE_TIMELINE:
+            console.log("ini state", state)
             return state.filter((timeline) => timeline.TempTimelineId !== action.id)
 
         case DELETE_TIMELINE_SUCCESS:
@@ -73,13 +77,14 @@ export default function timeline(state = initialState, action) {
             return state
 
         case ADD_COMMENT:
-            // console.log("init state: ", state)
+            console.log("init state: ", state)
+            console.log("init actiom: ", action)
             const timelines = state.filter((data) => {
                 // console.log(data.id, "===", action.idtimeline,data.id === action.idtimeline)
                 return data.id === action.idtimeline
             })
 
-            // console.log("isi timeline: ", timelines[0])
+            console.log("isi timeline: ", timelines[0])
             timelines[0].Comments.push({
                     id: action.id,
                     comment: action.comment,
@@ -110,10 +115,33 @@ export default function timeline(state = initialState, action) {
 
             }
 
+        case DELETE_COMMENT:
+            // console.log("ini state: ", state)
+            console.log("ini action: ", action.IdComment)
+
+            const deleteComments = state.filter((data) => {
+                // console.log("ini data: ", data)
+                // console.log(data.id, "===", action.IdTimeline,data.id === action.IdTimeline)
+                return data.id === action.IdTimeline
+            })
+            console.log("ini delete comment kosong: ", deleteComments[0].Comments)
+            console.log("ini delete comment: ", deleteComments)
+            return deleteComments[0].Comments.filter((deleteComments) => deleteComments.TempCommentId !== action.IdComment)
+            // return deleteComments[0].Comments.map((data) => data.id === action.idtimeline ? Object.assign({}, data, timelines[0]) : data)
+
+        // case DELETE_COMMENT_SUCCESS:
+        //     const deleteCommentsSuccess = state.filter((data) => {
+        //         // console.log("ini data: ", data)
+        //         // console.log(data.id, "===", action.IdTimeline,data.id === action.IdTimeline)
+        //         return data.id === action.IdTimeline
+        //     })
+        //     return deleteCommentsSuccess
+
         case LOAD_TIMELINES_FAILURE:
         case ADD_TIMELINE_FAILURE:
         case ADD_COMMENT_FAILURE:
         case DELETE_TIMELINE_FAILURE:
+        case DELETE_COMMENT_FAILURE:
         case EDIT_TIMELINE_FAILURE:
             return state
 

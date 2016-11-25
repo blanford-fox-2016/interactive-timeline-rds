@@ -115,7 +115,7 @@ class DataItem extends Component {
                                 </div>
                                 <div id={'collapse'+timelineReducers.id} className="panel-collapse collapse in">
                                     <div className="panel-body">
-                                        <ListComment commentReducers={timelineReducers.Comments} />
+                                        <ListComment commentReducers={timelineReducers.Comments} deleteComment={this.props.deleteComment} />
                                     </div>
                                 </div>
                             </div>

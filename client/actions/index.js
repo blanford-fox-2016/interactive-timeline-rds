@@ -187,3 +187,36 @@ export function createComment(TimelineId, UserId, comment) {
             })
     }
 }
+
+
+export function deleteDataComment(IdTimeline, IdComment){
+    return {type: types.DELETE_COMMENT, IdTimeline, IdComment}
+}
+
+
+export function deleteCommentFailure(){
+    return {type: types.DELETE_COMMENT_FAILURE}
+}
+
+export function deleteCommentSuccess(comment){
+    return {type: types.DELETE_COMMENT_SUCCESS, comment}
+}
+
+export function deleteComment(IdTimeline, IdComment){
+    return dispatch => {
+        dispatch(deleteDataComment(IdTimeline, IdComment))
+        return request
+            .del(SERVER_URL_COMMENTS)
+            .send({
+                TempCommentId: IdComment
+            })
+            .end((err, res) => {
+                if(err){
+                    console.error(err);
+                    dispatch(deleteCommentFailure())
+                }else{
+                    dispatch(deleteCommentSuccess(res.body))
+                }
+            })
+    }
+}

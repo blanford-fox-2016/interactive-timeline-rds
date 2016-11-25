@@ -8,13 +8,14 @@ class DataComment extends Component {
     //         timeline: this.props.timelineReducers.timeline || '',
     //     }
     // }
-    //
-    // clickDeleteTimeline() {
-    //     if (confirm("are you sure want ti delete")) {
-    //         this.props.deleteTimeline(this.props.timelineReducers.TempTimelineId)
-    //     }
-    // }
-    //
+
+    clickDeleteComment() {
+        if (confirm("are you sure want to delete")) {
+            // console.log(this.props.commentReducers)
+            this.props.deleteComment(this.props.commentReducers.TimelineId, this.props.commentReducers.TempCommentId)
+        }
+    }
+
     // clickEditTimeline() {
     //     this.setState({
     //         editing: true
@@ -48,11 +49,11 @@ class DataComment extends Component {
 
     render() {
         const {commentReducers, deleteData, editData} = this.props
-        console.log("dari datacomment: ", commentReducers)
+        // console.log("dari datacomment: ", commentReducers)
         return (
             <div className="panel panel-default">
                 <div className="panel-heading">
-                    <button className="btn btn-danger">Delete</button>
+                    <button onClick={this.clickDeleteComment.bind(this)} className="btn btn-danger">Delete</button>
                     <button className="btn btn-warning">Edit</button>
                 </div>
                 <div className="panel-body">

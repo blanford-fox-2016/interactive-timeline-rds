@@ -18,11 +18,11 @@ const initialState = []
 export default function timeline(state = initialState, action) {
     switch(action.type) {
 
-        case LOAD_COMMENTS:
-            return []
-
-        case LOAD_COMMENTS_SUCCESS:
-            return action.comment
+        // case LOAD_COMMENTS:
+        //     return []
+        //
+        // case LOAD_COMMENTS_SUCCESS:
+        //     return action.comment
 
         // case ADD_TIMELINE:
         //     console.log("di add>>> ", action.User)
