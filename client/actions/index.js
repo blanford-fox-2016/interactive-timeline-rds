@@ -2,7 +2,7 @@ import * as types from '../constant/ActionTypes'
 import request from 'superagent'
 
 const SERVER_URL = 'http://localhost:3000/api/timelines'
-const SERVER_UR_COMMENTS = 'http://localhost:3000/api/comments'
+const SERVER_URL_COMMENTS = 'http://localhost:3000/api/comments'
 
 
 export function loadTimeline() {
@@ -144,30 +144,45 @@ export function editTimeline(id, timeline){
     }
 }
 
-export function createComment(id, comment) {
+
+export function addDataComment(id, idtimeline, User, comment) {
+    return {type: types.ADD_COMMENT, id, idtimeline, User, comment}
+}
+
+export function addCommentFailure() {
+    return {type: types.ADD_COMMENT_FAILURE}
+}
+
+export function addCommentSuccess(comment) {
+    return {type: types.ADD_COMMENT_SUCCESS, comment}
+}
+
+export function createComment(TimelineId, UserId, comment) {
+    // console.log(`${TimelineId}, ${UserId}, ${comment}`)
     const TempCommentId = Date.now().toString()
     let User = {
         id: UserId,
-        username: 'admin'
+        username: ''
     }
     return dispatch => {
-        dispatch(addDataTimeline(TempTimelineId, User, timeline))
+        dispatch(addDataComment(TempCommentId, TimelineId, User, comment))
         return request
-            .post(SERVER_URL)
+            .post(SERVER_URL_COMMENTS)
             .type('form')
             .send({
-                TempTimelineId: TempTimelineId,
-                timeline: timeline,
-                UserId: User.id
+                TempCommentId: TempCommentId,
+                comment: comment,
+                UserId: User.id,
+                TimelineId: TimelineId
             })
             .set('Accept', 'application/json')
             .end((err, res) => {
                 if (err) {
                     console.error(err)
-                    dispatch(addTimelineFailure())
+                    dispatch(addCommentFailure())
                 }
                 else {
-                    dispatch(addTimelineSuccess(res.body))
+                    dispatch(addCommentSuccess(res.body))
                 }
             })
     }

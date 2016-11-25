@@ -14,6 +14,9 @@ module.exports = {
                 include: [
                     {
                         model: User
+                    },
+                    {
+                        model: Comment
                     }
                 ],
 
@@ -41,7 +44,8 @@ module.exports = {
             ],
 
             order: [
-                ['createdAt', 'DESC']
+                ['createdAt', 'DESC'],
+                [Comment, 'createdAt', 'ASC']
             ]
         }).then((data) => {
             res.json(data)

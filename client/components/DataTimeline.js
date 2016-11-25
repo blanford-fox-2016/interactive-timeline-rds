@@ -64,7 +64,11 @@ class DataItem extends Component {
         if (!comment) {
             return
         }
-        this.props.createComment(this.props.timelineReducers.TempCommentId, comment)
+        // console.log(this.props.timelineReducers)
+        this.props.createComment(this.props.timelineReducers.id, 1, comment)
+        this.setState({
+            comment: ''
+        })
     }
 
 
@@ -82,15 +86,6 @@ class DataItem extends Component {
                             <input className="form-control" type="text" placeholder="Timeline" value={this.state.timeline} onChange={this.handleTimelineChange.bind(this)} />
                             <button type="submit" className="btn btn-success">Save</button>
                             <button type="button" className="btn btn-warning" onClick={this.cancelEditTimeline.bind(this)}>Candel</button>
-                        </form>
-                    </div>
-                    <div className="panel-footer">
-                        <form onSubmit={this.handleCreateComment.bind(this)} className="form-inline">
-                            <div className="form-group">
-                                <label>Photo</label>
-                                <input value={this.state.timeline} onChange={this.handleCommentChange.bind(this)} type="text" className="form-control" />
-                            </div>
-                            <button type="submit" className="btn btn-default">Submit</button>
                         </form>
                     </div>
                 </div>
@@ -128,10 +123,10 @@ class DataItem extends Component {
 
                     </div>
                     <div className="panel-footer">
-                        <form className="form-inline">
+                        <form onSubmit={this.handleCreateComment.bind(this)}m className="form-inline">
                             <div className="form-group">
                                 <label>Photo</label>
-                                <input type="text" className="form-control" />
+                                <input value={this.state.comment} onChange={this.handleCommentChange.bind(this)} type="text" className="form-control" />
                             </div>
                             <button type="submit" className="btn btn-default">Submit</button>
                         </form>
