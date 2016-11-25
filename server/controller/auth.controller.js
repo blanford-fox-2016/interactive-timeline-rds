@@ -13,11 +13,34 @@ module.exports = {
             email: req.body.email,
             image_url: req.body.image_url
         }).then((data) => {
-            res.json(data)
+            let token = jwt.sign({
+                id: data.id,
+                name: data.name,
+                username: data.username,
+                email: data.email,
+                image_url: data.image_url
+            }, process.env.SECRET, {expiresIn: '1h'})
+            res.status(200).json(token)
+        }).catch((err) => {
+            res.status(500).json(err)
         })
     },
     loginProcess: function(req, res) {
-      console.log('success');
-      console.log('req : ', req.body);
+        user.find({
+            where: {
+                username: req.body.username
+            }
+        }).then((data) => {
+            let token = jwt.sign({
+                id: data.id,
+                name: data.name,
+                username: data.username,
+                email: data.email,
+                image_url: data.image_url
+            }, process.env.SECRET, {expiresIn: '1h'})
+            res.status(200).json(token)
+        }).catch((err) => {
+            res.status(500).json(err)
+        })
     }
 }
