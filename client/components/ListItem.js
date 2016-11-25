@@ -14,6 +14,7 @@ export default class ListItem extends Component {
         const {data, actions} = this.props
         let filteredData = data
         let dataNodes = filteredData.map(function(item) {
+          console.log('item :', item);
             return (<DataItem key={item.id} data={item} {...actions}/>)
         })
         return (

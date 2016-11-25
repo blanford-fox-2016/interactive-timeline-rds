@@ -40,10 +40,8 @@ export default function data(state = initialState, objFromUserAction) {
             console.log('idObject :', idObject);
 
             if (idObject > -1) {
-                console.log('a');
                 return state
             } else {
-                console.log('b');
                 let newArray = state.filter((data)=> {
                   return data.fake != true
                 })

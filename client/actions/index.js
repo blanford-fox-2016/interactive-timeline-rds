@@ -3,14 +3,6 @@ import request from 'superagent'
 
 const SERVER_URL = 'http://localhost:3000/api/post'
 
-export function editPost(id, content){
-  return {type: types.EDIT_POST, id: id, content: content}
-}
-
-export function deletePost(id){
-  return {type: types.DELETE_POST, id: id}
-}
-
 export function loadPost() {
     return {type: types.LOAD_POST}
 }
@@ -42,30 +34,62 @@ export function addPost(contentParameter){
 }
 
 export function addPostFailure() {
-  console.log('fail add');
     return {type: types.ADD_POST_FAILURE}
 }
 
 export function addPostSuccess(content) {
-  console.log('success add');
     return {type: types.ADD_POST_SUCCESS, content: content}
 }
 
 export function addPostProcess(content) {
     let UserId = Date.now().toString()
-    console.log('process add');
-    console.log('content : ', content);
     return dispatch => {
         dispatch(addPost(content))
         return request.post(SERVER_URL).type('form').send({content: content}).set('Accept', 'application/json').end((err, res) => {
             if (err) {
-              console.log('ajax error');
                 console.log(err);
                 dispatch(addPostFailure())
             } else {
-              console.log('res body :', res.body);
                 dispatch(addPostSuccess(res.body))
             }
         })
     }
+}
+
+export function deletePost(id){
+  return {type: types.DELETE_POST, id: id}
+}
+
+export function deletePostFailure() {
+    return {type: types.DELETE_POST_FAILURE}
+}
+
+export function deletePostSuccess(content) {
+    return {type: types.DELETE_POST_SUCCESS, content: content}
+}
+
+export function deletePostProcess(id) {
+  return dispatch => {
+    dispatch(deletePost(id))
+    return request.del(SERVER_URL).end((err, res) => {
+      if (err) {
+        console.log(err);
+        dispatch(deletePostFailure())
+      } else {
+        dispatch(deletePostSuccess(res.body))
+      }
+    })
+  }
+}
+
+export function editPost(id, content){
+  return {type: types.EDIT_POST, id: id, content: content}
+}
+
+export function editPostFailure() {
+    return {type: types.EDIT_POST_FAILURE}
+}
+
+export function editPostSuccess(id, content) {
+    return {type: types.EDIT_POST_SUCCESS, id: id, content: content}
 }
