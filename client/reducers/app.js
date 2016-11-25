@@ -24,8 +24,9 @@ export default function data(state = initialState, action){
 
     case ADD_TIMELINE:
       // id, User temporary
+      console.log(state);
       return [{
-        id: state[0].id+1,
+        id: state.length === 0 ? 1 : state[0].id+1,
         User: action.User,
         content: action.content
       },
@@ -37,7 +38,7 @@ export default function data(state = initialState, action){
       // let idObject = timelines.map(function(x){
       //   return x.id
       // }).indexOf(action.timeline.id)
-      // // console.log(state);
+      // console.log(state);
       // // console.log(action.timeline);
       // // console.log(idObject);
       // if(idObject > -1){
@@ -49,7 +50,7 @@ export default function data(state = initialState, action){
       // }
       // console.log(action.timeline);
       // ini untuk pake id default dari db
-      return state.map(data => data.id === action.timeline.id ? Object.assign({}, data, {User: action.timeline.User}): data)
+      return state.map(data => (data.id === action.timeline.id || state[0]) ? Object.assign({}, data, {User: action.timeline.User}): data)
 
     case EDIT_TIMELINE:
       return state.map(data => data.id === action.id ? Object.assign({}, data, {content: action.content}): data)
