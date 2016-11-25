@@ -17,6 +17,8 @@ module.exports = {
         })
     },
     editPost: function(req, res, next) {
+      console.log('edit controller');
+      console.log('body : ', req.body);
         post.findOne({
             where: {
                 id: req.body.id
@@ -28,7 +30,7 @@ module.exports = {
         })
     },
     deletePost: function(req, res, next) {
-        console.log(req.body);
+        console.log('req body : ',req.body);
         post.destroy({
             where: {
                 id: req.body.id
@@ -39,7 +41,6 @@ module.exports = {
             } else {
                 res.json({ message: 'ID not found' })
             }
-            res.json(data)
         })
     },
     showPostComment: function(req, res, next) {

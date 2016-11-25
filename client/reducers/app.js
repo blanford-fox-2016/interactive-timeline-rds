@@ -1,13 +1,16 @@
 import {
-    ADD_POST,
-    EDIT_POST,
-    DELETE_POST,
-    LOAD_POST,
-    LOAD_POST_SUCCESS,
-    LOAD_POST_FAILURE,
-    ADD_POST_SUCCESS,
-    ADD_POST_FAILURE
-} from '../constants/ActionTypes'
+  LOAD_POST,
+  LOAD_POST_SUCCESS,
+  LOAD_POST_FAILURE,
+  ADD_POST,
+  ADD_POST_SUCCESS,
+  ADD_POST_FAILURE,
+  EDIT_POST,
+  EDIT_POST_SUCCESS,
+  EDIT_POST_FAILURE,
+  DELETE_POST,
+  DELETE_POST_SUCCESS,
+  DELETE_POST_FAILURE} from '../constants/ActionTypes'
 
 const initialState = []
 
@@ -24,7 +27,7 @@ export default function data(state = initialState, objFromUserAction) {
         case ADD_POST:
             return [
                 {
-                    id: Date.now(),
+                    id: '-',
                     content: objFromUserAction.content,
                     fake: true
                 },
@@ -60,6 +63,9 @@ export default function data(state = initialState, objFromUserAction) {
             return state.filter(cb_result => cb_result.id !== objFromUserAction.id)
 
         case LOAD_POST_FAILURE:
+            return state
+
+        case DELETE_POST_FAILURE:
             return state
 
         default:

@@ -64,14 +64,14 @@ export function deletePostFailure() {
     return {type: types.DELETE_POST_FAILURE}
 }
 
-export function deletePostSuccess(content) {
-    return {type: types.DELETE_POST_SUCCESS, content: content}
+export function deletePostSuccess(id) {
+    return {type: types.DELETE_POST_SUCCESS}
 }
 
 export function deletePostProcess(id) {
   return dispatch => {
     dispatch(deletePost(id))
-    return request.del(SERVER_URL).end((err, res) => {
+    return request.del(SERVER_URL).send({id:id}).end((err, res) => {
       if (err) {
         console.log(err);
         dispatch(deletePostFailure())
@@ -92,4 +92,18 @@ export function editPostFailure() {
 
 export function editPostSuccess(id, content) {
     return {type: types.EDIT_POST_SUCCESS, id: id, content: content}
+}
+
+export function editPostProcess(id, content){
+  return dispatch => {
+      dispatch(editPost(id, content))
+      return request.put(SERVER_URL).type('form').send({id: id, content: content}).set('Accept', 'application/json').end((err, res) => {
+          if (err) {
+              console.log(err);
+              dispatch(editPostFailure())
+          } else {
+              dispatch(editPostSuccess(res.body))
+          }
+      })
+  }
 }
