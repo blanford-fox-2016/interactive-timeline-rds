@@ -20,7 +20,8 @@ module.exports = {
   createNewComment: function(req, res, next) {
       comment.create({
         content: req.body.content,
-        UserId: 1
+        UserId: 1,
+        PostId: 1
        }).then((data) => {
           res.json(data)
       })
