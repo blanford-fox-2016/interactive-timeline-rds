@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import * as AppActions from '../actions'
 import ListItem from '../components/ListTimeline'
 import FormTimeline from '../components/FormTimeline'
+import Auth from '../components/Auth'
 
 class Timeline extends Component {
 
@@ -15,30 +16,40 @@ class Timeline extends Component {
     render() {
         const {timelineReducers, actions} = this.props
         // console.log("Dari timeline: ", commentReducers)
-        return(
-            <div className="container">
 
-                <div className="row">
-                    <div className="col-sm-8 col-sm-offset-2">
-                        <div className="jumbotron text-center">
-                            <h3>Interactive Timeline RDS</h3>
+        if (!Auth.getToken) {
+            return(
+                <div>
+                    <Auth/>
+                </div>
+            )
+        }
+        else {
+            return(
+                <div className="container">
+
+                    <div className="row">
+                        <div className="col-sm-8 col-sm-offset-2">
+                            <div className="jumbotron text-center">
+                                <h3>Interactive Timeline RDS</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col-sm-8 col-sm-offset-2">
+                            <FormTimeline onSave={actions.addTimeline}/>
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col-sm-8 col-sm-offset-2">
+                            <ListItem timelineReducers={timelineReducers} actions={actions}/>
                         </div>
                     </div>
                 </div>
-
-                <div className="row">
-                    <div className="col-sm-8 col-sm-offset-2">
-                        <FormTimeline onSave={actions.addTimeline}/>
-                    </div>
-                </div>
-                
-                <div className="row">
-                    <div className="col-sm-8 col-sm-offset-2">
-                        <ListItem timelineReducers={timelineReducers} actions={actions}/>
-                    </div>
-                </div>
-            </div>
-        )
+            )
+        }
     }
 }
 
