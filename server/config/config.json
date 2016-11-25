@@ -1,0 +1,23 @@
+{
+    "development": {
+        "username": "postgres",
+        "password": "password",
+        "database": "test-react-interactive",
+        "host": "127.0.0.1",
+        "dialect": "postgres"
+    },
+    "test": {
+        "username": "postgres",
+        "password": "password",
+        "database": "react-interactive-timeline-test",
+        "host": "127.0.0.1",
+        "dialect": "postgres"
+    },
+    "production": {
+        "username": "postgres",
+        "password": "password",
+        "database": "react-interactive-timeline-production",
+        "host": "127.0.0.1",
+        "dialect": "postgres"
+    }
+}
