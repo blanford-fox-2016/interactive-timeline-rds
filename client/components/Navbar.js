@@ -18,7 +18,7 @@ class Navbar extends Component {
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>
                         </button>
-                        <a className="navbar-brand" href="#">PhoneBook App</a>
+                        <a className="navbar-brand" href="#">Interactive Timeline App</a>
                     </div>
                     <div id="navbar" className="navbar-collapse collapse">
                         {/* <ul className="nav navbar-nav">

@@ -18,11 +18,16 @@ class App extends Component {
                             <h1>Interactive Timeline with REDUX</h1>
                         </div>
                     </div>
-                    <FormAdd onSave={magicActionFromRedux.addPost}/>
+                    <FormAdd onSave={magicActionFromRedux.addPostProcess}/>
                     <ListItem data={magicDataFromRedux} actions={magicActionFromRedux}/>
                 </div>
             </div>
         )
+    }
+    componentDidMount() {
+      console.log('component mounted');
+      console.log('props app: ', this.props);
+      this.props.magicActionFromRedux.loadPostProcess()
     }
 }
 

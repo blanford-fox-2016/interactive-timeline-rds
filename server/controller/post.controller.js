@@ -4,7 +4,7 @@ var post = models.Post
 
 module.exports = {
     getAllPost: function(req, res, next) {
-        post.findAll({ order: ['id'] }).then((data) => {
+        post.findAll({ order: [['id', 'DESC']] }).then((data) => {
             res.json(data)
         })
     },
