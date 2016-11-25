@@ -50,10 +50,21 @@ class DataItem extends Component {
         })
     }
 
+    //COMMENT
+
     handleCommentChange(e) {
         this.setState({
             comment: e.target.value
         })
+    }
+
+    handleCreateComment(e) {
+        e.preventDefault()
+        let comment = this.state.comment.trim()
+        if (!comment) {
+            return
+        }
+        this.props.createComment(this.props.timelineReducers.TempCommentId, comment)
     }
 
 
@@ -74,7 +85,7 @@ class DataItem extends Component {
                         </form>
                     </div>
                     <div className="panel-footer">
-                        <form className="form-inline">
+                        <form onSubmit={this.handleCreateComment.bind(this)} className="form-inline">
                             <div className="form-group">
                                 <label>Photo</label>
                                 <input value={this.state.timeline} onChange={this.handleCommentChange.bind(this)} type="text" className="form-control" />
@@ -107,7 +118,7 @@ class DataItem extends Component {
                                         <p>{timelineReducers.timeline}</p>
                                     </div>
                                 </div>
-                                <div id={'collapse'+timelineReducers.id} className={timelineReducers.Comments.length !=0  ? "panel-collapse collapse in" : "panel-collapse collapse"}>
+                                <div id={'collapse'+timelineReducers.id} className="panel-collapse collapse in">
                                     <div className="panel-body">
                                         <ListComment commentReducers={timelineReducers.Comments} />
                                     </div>

@@ -9,7 +9,7 @@ class Timeline extends Component {
 
     componentDidMount() {
         this.props.actions.loadTimelines()
-        this.props.actions.loadComments()
+        // this.props.actions.loadComments()
     }
 
     render() {
@@ -46,14 +46,14 @@ class Timeline extends Component {
 
 Timeline.propTypes = {
     timelineReducers: PropTypes.array.isRequired,
-    commentReducers: PropTypes.array.isRequired,
+    // commentReducers: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired
 }
 
 function mapStateToProps(state) {
     return {
         timelineReducers: state.timelineReducers,
-        commentReducers: state.commentReducers
+        // commentReducers: state.commentReducers
     }
 }
 

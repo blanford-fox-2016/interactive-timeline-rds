@@ -52,7 +52,7 @@ export function addTimeline(UserId, timeline) {
     const TempTimelineId = Date.now().toString()
     let User = {
         id: UserId,
-        username: 'admin'
+        username: ''
     }
     return dispatch => {
         dispatch(addDataTimeline(TempTimelineId, User, timeline))
@@ -144,37 +144,30 @@ export function editTimeline(id, timeline){
     }
 }
 
-
-
-
-
-export function loadComment() {
-    return {type: types.LOAD_COMMENTS}
-}
-
-export function loadCommentSuccess(comment) {
-    return {type: types.LOAD_COMMENTS_SUCCESS, comment: comment}
-}
-
-export function loadCommentFailure() {
-    return {type: types.LOAD_COMMENTS_FAILURE}
-}
-
-
-export function loadComments() {
+export function createComment(id, comment) {
+    const TempCommentId = Date.now().toString()
+    let User = {
+        id: UserId,
+        username: 'admin'
+    }
     return dispatch => {
-        dispatch(loadComment())
+        dispatch(addDataTimeline(TempTimelineId, User, timeline))
         return request
-            .get(SERVER_UR_COMMENTS)
+            .post(SERVER_URL)
+            .type('form')
+            .send({
+                TempTimelineId: TempTimelineId,
+                timeline: timeline,
+                UserId: User.id
+            })
             .set('Accept', 'application/json')
             .end((err, res) => {
                 if (err) {
                     console.error(err)
-                    dispatch(loadCommentFailure())
+                    dispatch(addTimelineFailure())
                 }
                 else {
-                    // console.log("dari action: ", res.body)
-                    dispatch(loadCommentSuccess(res.body))
+                    dispatch(addTimelineSuccess(res.body))
                 }
             })
     }

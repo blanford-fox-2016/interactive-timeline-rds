@@ -32,13 +32,13 @@ export default function timeline(state = initialState, action) {
                 {
                     id: action.id,
                     timeline: action.timeline,
-                    User: action.User
+                    User: action.User,
+                    fake: true
                 },
                 ...state
             ]
 
         case ADD_TIMELINE_SUCCESS:
-            console.log("di success>>> ", state)
             let idObject = state.map(function (x) {
                 return x.id
             }).indexOf(action.timeline.id)
@@ -46,7 +46,12 @@ export default function timeline(state = initialState, action) {
                 return state
             }
             else {
-                return [action.timeline, ...state]
+                let newTimelineFilter = state.filter((data) => {
+                    console.log("init data: ", data)
+                    return data.fake != true
+                })
+                return [action.timeline, ...newTimelineFilter]
+
             }
 
         case DELETE_TIMELINE:
