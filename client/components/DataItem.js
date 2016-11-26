@@ -33,10 +33,10 @@ export default class DataItem extends Component {
                     <div className="message-head clearfix">
                         <div className="avatar pull-left">
                             <a href="./index.php?qa=user&qa_1=Oleg+Kolesnichenko">
-                                <img src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png"/></a>
+                                <img src={()=> (Auth.getUser().image_url == undefined) ? "https://ssl.gstatic.com/accounts/ui/avatar_2x.png" : Auth.getUser().image_url}/></a>
                         </div>
                         <div className="user-detail">
-                            <h5 className="handle">Dummy user</h5>
+                            <h5 className="handle">{Auth.getUser().name}</h5>
                             <div className="post-meta">
                                 <div className="asker-meta">
                                     <span className="qa-message-what"></span>
@@ -76,16 +76,17 @@ export default class DataItem extends Component {
 
             )
         } else {
+          console.log('user :',Auth.getUser());
             return (
 <div className = "container"><div className = "qa-message-list" id = "wallmessages"> <div className="message-item" id="m16">
                 <div className="message-inner">
                     <div className="message-head clearfix">
                         <div className="avatar pull-left">
                             <a href="./index.php?qa=user&qa_1=Oleg+Kolesnichenko">
-                                <img src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png"/></a>
+                                <img src={()=> (Auth.getUser().image_url === undefined) ? "https://ssl.gstatic.com/accounts/ui/avatar_2x.png" : Auth.getUser().image_url}/></a>
                         </div>
                         <div className="user-detail">
-                            <h5 className="handle">Dummy user</h5>
+                            <h5 className="handle">{Auth.getUser().name}</h5>
                             <div className="post-meta">
                                 <div className="asker-meta">
                                     <span className="qa-message-what"></span>

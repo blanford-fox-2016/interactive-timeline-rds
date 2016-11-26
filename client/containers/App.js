@@ -10,7 +10,7 @@ import AuthPage from '../components/AuthPage'
 class App extends Component {
     render() {
         const {magicDataFromRedux, magicActionFromRedux} = this.props
-        console.log('Auth', Auth);
+        console.log('magicDataFromRedux : ', magicDataFromRedux);
         if (Auth.isUserAuthenticated()) {
           return (
               <div>
@@ -28,13 +28,11 @@ class App extends Component {
           )
         } else {
           return (
-            <AuthPage onLogin={magicActionFromRedux} onRegister={magicActionFromRedux}/>
+            <AuthPage data={magicDataFromRedux} onLogin={magicActionFromRedux.loginProcess} onRegister={magicActionFromRedux}/>
           )
         }
     }
     componentDidMount() {
-      console.log('component mounted');
-      console.log('props app: ', this.props);
       this.props.magicActionFromRedux.loadPostProcess()
     }
 }

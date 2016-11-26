@@ -7,7 +7,7 @@ const Auth = {
         if (data.status === 'error')
             console.log('No account:', data)
         Auth.deauthenticateUser()
-        localStorage.setItem('token', data.token)
+        localStorage.setItem('token', data)
     },
     isUserAuthenticated: () => {
         return localStorage.getItem('token') !== null
