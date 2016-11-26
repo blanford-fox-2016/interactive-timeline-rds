@@ -9,6 +9,7 @@ import FormAdd from '../components/FormAdd'
 class App extends Component {
     render() {
         const {magicDataFromRedux, magicActionFromRedux} = this.props
+        console.log('Auth', Auth);
         return (
             <div>
                 <Navbar/>
