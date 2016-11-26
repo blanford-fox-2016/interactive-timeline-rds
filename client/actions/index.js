@@ -115,9 +115,12 @@ export function login(usernameLogin, passwordLogin) {
 }
 
 export function loginSuccess(userToken) {
-  console.log('return after login success');
+    console.log('return after login success');
     console.log('userToken : ', userToken);
-    return {type: types.LOGIN_PROCESS_SUCCESS}
+    if (userToken) {
+        Auth.authenticateUser(userToken)
+        return {type: types.LOGIN_PROCESS_SUCCESS}
+    } else {}
 }
 
 export function loginFailure() {
@@ -133,8 +136,48 @@ export function loginProcess(usernameLogin, passwordLogin) {
                 console.log(err);
                 dispatch(loginFailure())
             } else {
-              console.log('login success');
+                console.log('login success');
                 dispatch(loginSuccess(res.body))
+            }
+        })
+    }
+}
+
+export function register(name, usernameRegister, passwordRegister, email, image_url) {
+    return {
+        type: types.LOGIN_PROCESS,
+        name: name,
+        username: usernameRegister,
+        password: passwordRegister,
+        email: email,
+        image_url: image_url
+    }
+}
+
+export function registerSuccess(userToken) {
+    console.log('return after register success');
+    console.log('userToken : ', userToken);
+    if (userToken) {
+        Auth.authenticateUser(userToken)
+        return {type: types.LOGIN_PROCESS_SUCCESS}
+    } else {}
+}
+
+export function registerFailure() {
+    return {type: types.LOGIN_PROCESS_FAILURE}
+}
+
+export function registerProcess(name, usernameRegister, passwordRegister, email, image_url) {
+    console.log('register process');
+    return dispatch => {
+        dispatch(register(name, usernameRegister, passwordRegister, email, image_url))
+        return request.post(SERVER_URL_REGISTER).type('form').send({name: name, username: usernameRegister, password: passwordRegister, email: email, image_url: image_url}).set('Accept', 'application/json').end((err, res) => {
+            if (err) {
+                console.log(err);
+                dispatch(registerFailure())
+            } else {
+                console.log('login success');
+                dispatch(registerSuccess(res.body))
             }
         })
     }

@@ -62,6 +62,7 @@ export default class AuthPage extends Component {
         } else {
             this.props.onLogin(usernameLogin, passwordLogin)
             this.setState({usernameLogin: '', passwordLogin: ''})
+            location.reload()
         }
     }
     handleSubmitRegister(e) {
@@ -89,6 +90,7 @@ export default class AuthPage extends Component {
                     email: '',
                     image_url: ''
                 })
+                location.reload()
             }
         }
     }

@@ -7,6 +7,11 @@ class Navbar extends Component {
         searchInput: this.props.searchInput || ''
       }
     }
+    handleLogout() {
+      console.log('logout?');
+      Auth.deauthenticateUser()
+      this.props.history.go('/')
+    }
     render() {
         return (
             <nav className="navbar navbar-inverse navbar-static-top">
@@ -20,12 +25,13 @@ class Navbar extends Component {
                         </button>
                         <a className="navbar-brand" href="#">Interactive Timeline App</a>
                     </div>
-                    <div id="navbar" className="navbar-collapse collapse">
+                    <div id="navbar" className="navbar-collapse collapse navbar-right">
                         {/* <ul className="nav navbar-nav">
                   <li><Link to="/">Home</Link></li>
                   <li><Link to="/data">Data</Link></li>
                   <li><Link to="/datadate">Data Date</Link></li>
                 </ul> */}
+                <button className="btn btn-primary raised" onClick={this.handleLogout.bind(this)}>Logout</button>
                     </div>
                 </div>
             </nav>

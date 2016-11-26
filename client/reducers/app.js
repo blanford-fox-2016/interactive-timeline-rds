@@ -64,16 +64,16 @@ export default function data(state = initialState, objFromUserAction) {
             return state.filter(cb_result => cb_result.id !== objFromUserAction.id)
 
         case LOGIN_PROCESS:
-        console.log('login case');
-        console.log('obj case process:', objFromUserAction);
           return state
 
         case LOGIN_PROCESS_SUCCESS:
-        console.log('login case success');
-        console.log('obj case success:', objFromUserAction);
-          return [
-            ...state
-          ]
+          return state
+
+        case REGISTER_PROCESS:
+          return state
+
+        case REGISTER_PROCESS_SUCCESS:
+          return state
 
         case LOAD_POST_FAILURE:
             return state
@@ -82,7 +82,9 @@ export default function data(state = initialState, objFromUserAction) {
             return state
 
         case LOGIN_PROCESS_FAILURE:
-            console.log('login case fail');
+            return state
+
+        case REGISTER_PROCESS_FAILURE:
             return state
 
         default:

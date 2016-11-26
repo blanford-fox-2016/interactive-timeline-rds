@@ -14,6 +14,9 @@ export default class DataItem extends Component {
     handleEditClick() {
         this.setState({editing: true})
     }
+    handleCancel() {
+      this.setState({editing: false})
+    }
     handleSaveEdit(e) {
         e.preventDefault()
         let content = this.state.content.trim()
@@ -33,7 +36,7 @@ export default class DataItem extends Component {
                     <div className="message-head clearfix">
                         <div className="avatar pull-left">
                             <a href="./index.php?qa=user&qa_1=Oleg+Kolesnichenko">
-                                <img src={()=> (Auth.getUser().image_url == undefined) ? "https://ssl.gstatic.com/accounts/ui/avatar_2x.png" : Auth.getUser().image_url}/></a>
+                                <img src={Auth.getUser().image_url}/></a>
                         </div>
                         <div className="user-detail">
                             <h5 className="handle">{Auth.getUser().name}</h5>
@@ -64,7 +67,7 @@ export default class DataItem extends Component {
                           <span>
                           <button className="btn btn-success raised btn-space" type="submit">
                               <span className="glyphicon glyphicon-ok"></span>          Confirm Edit</button>
-                              <button className="btn btn-default raised" type="submit">
+                              <button className="btn btn-default raised" onClick={this.handleCancel.bind(this)}>
                               <span className="glyphicon glyphicon-repeat"></span>          Cancel</button>
                           </span>
                       </form>
@@ -76,14 +79,13 @@ export default class DataItem extends Component {
 
             )
         } else {
-          console.log('user :',Auth.getUser());
             return (
 <div className = "container"><div className = "qa-message-list" id = "wallmessages"> <div className="message-item" id="m16">
                 <div className="message-inner">
                     <div className="message-head clearfix">
                         <div className="avatar pull-left">
                             <a href="./index.php?qa=user&qa_1=Oleg+Kolesnichenko">
-                                <img src={()=> (Auth.getUser().image_url === undefined) ? "https://ssl.gstatic.com/accounts/ui/avatar_2x.png" : Auth.getUser().image_url}/></a>
+                                <img src={Auth.getUser().image_url}/></a>
                         </div>
                         <div className="user-detail">
                             <h5 className="handle">{Auth.getUser().name}</h5>

@@ -9,12 +9,11 @@ import AuthPage from '../components/AuthPage'
 
 class App extends Component {
     render() {
-        const {magicDataFromRedux, magicActionFromRedux} = this.props
-        console.log('magicDataFromRedux : ', magicDataFromRedux);
+        const {magicDataFromRedux, magicActionFromRedux, history} = this.props
         if (Auth.isUserAuthenticated()) {
           return (
               <div>
-                  <Navbar/>
+                  <Navbar data={magicDataFromRedux} history={history}/>
                   <div className="container">
                       <div className="row">
                           <div className="well text-center">
@@ -28,7 +27,7 @@ class App extends Component {
           )
         } else {
           return (
-            <AuthPage data={magicDataFromRedux} onLogin={magicActionFromRedux.loginProcess} onRegister={magicActionFromRedux}/>
+            <AuthPage data={magicDataFromRedux} onLogin={magicActionFromRedux.loginProcess} onRegister={magicActionFromRedux.registerProcess} history={history}/>
           )
         }
     }
@@ -39,11 +38,15 @@ class App extends Component {
 
 App.propTypes = {
     magicDataFromRedux: PropTypes.array.isRequired,
-    magicActionFromRedux: PropTypes.object.isRequired
+    magicActionFromRedux: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired
 }
 
 function mapStateToProps(state) {
-    return {magicDataFromRedux: state.data}
+    return {
+      magicDataFromRedux: state.data,
+      history: history
+    }
 }
 
 function mapDispatchToProps(dispatch) {
