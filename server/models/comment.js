@@ -3,7 +3,7 @@ module.exports = function(sequelize, DataTypes) {
   var Comment = sequelize.define('Comment', {
     content: DataTypes.STRING,
     UserId: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       references: {
           model: 'Users',
           key: 'Id'
@@ -12,7 +12,7 @@ module.exports = function(sequelize, DataTypes) {
       onDelete: 'SET NULL'
     },
     PostId: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       references: {
           model: 'Posts',
           key: 'Id'
@@ -24,8 +24,8 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-        Comment.belongsTo(models.User)
         Comment.belongsTo(models.Post)
+        Comment.belongsTo(models.User)
       }
     }
   });

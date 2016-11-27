@@ -61,6 +61,7 @@ export default class AuthPage extends Component {
             return;
         } else {
             this.props.onLogin(usernameLogin, passwordLogin)
+            console.log('login process');
             this.setState({usernameLogin: '', passwordLogin: ''})
             location.reload()
         }

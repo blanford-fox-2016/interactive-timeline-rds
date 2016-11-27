@@ -3,7 +3,7 @@ module.exports = function(sequelize, DataTypes) {
   var Post = sequelize.define('Post', {
     content: DataTypes.STRING,
     UserId: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       references: {
           model: 'Users',
           key: 'Id'
@@ -15,6 +15,7 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
+        Post.hasMany(models.Comment)
         Post.belongsTo(models.User)
       }
     }

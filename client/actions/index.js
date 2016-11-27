@@ -46,8 +46,10 @@ export function addPostSuccess(content) {
 export function addPostProcess(content) {
     let UserId = Date.now().toString()
     return dispatch => {
+      console.log('aaaaa');
+      console.log(Auth.getUser());
         dispatch(addPost(content))
-        return request.post(SERVER_URL).type('form').send({content: content}).set('Accept', 'application/json').end((err, res) => {
+        return request.post(SERVER_URL).type('form').send({content: content, user_id: Auth.getUser().id}).set('Accept', 'application/json').end((err, res) => {
             if (err) {
                 console.log(err);
                 dispatch(addPostFailure())
@@ -111,6 +113,7 @@ export function editPostProcess(id, content) {
 }
 
 export function login(usernameLogin, passwordLogin) {
+  console.log('login normal :', usernameLogin, passwordLogin);
     return {type: types.LOGIN_PROCESS, username: usernameLogin, password: passwordLogin}
 }
 
@@ -130,13 +133,16 @@ export function loginFailure() {
 export function loginProcess(usernameLogin, passwordLogin) {
     console.log('login process');
     return dispatch => {
+        console.log('dispatch');
         dispatch(login(usernameLogin, passwordLogin))
         return request.post(SERVER_URL_LOGIN).type('form').send({username: usernameLogin, password: passwordLogin}).set('Accept', 'application/json').end((err, res) => {
             if (err) {
                 console.log(err);
+                console.log('login error');
                 dispatch(loginFailure())
             } else {
                 console.log('login success');
+                console.log('body :', res.body);
                 dispatch(loginSuccess(res.body))
             }
         })

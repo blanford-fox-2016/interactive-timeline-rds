@@ -20,6 +20,7 @@ module.exports = {
                 email: data.email,
                 image_url: data.image_url
             }, process.env.SECRET, {expiresIn: '1h'})
+            console.log('register token created : ', token);
             res.status(200).json(token)
         }).catch((err) => {
             res.status(500).json(err)
@@ -38,6 +39,7 @@ module.exports = {
                 email: data.email,
                 image_url: data.image_url
             }, process.env.SECRET, {expiresIn: '1h'})
+            console.log('login token created : ', token);
             res.status(200).json(token)
         }).catch((err) => {
             res.status(500).json(err)
