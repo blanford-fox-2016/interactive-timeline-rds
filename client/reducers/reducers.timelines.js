@@ -47,10 +47,17 @@ export default function timeline(state = initialState, action) {
         case ADD_TIMELINE_SUCCESS:
             console.log("init dari reducers: ", action.timeline)
             let idObjects = state.map(function (x) {
+                console.log("isi x object: ", x)
                 return x.id
             })
-            let idObject = idObjects.indexOf(action.timeline.id)
 
+            console.log("isi id object: ", idObjects)
+
+            console.log("isi id action timeline id: ", action.timeline.id)
+
+
+            let idObject = idObjects.indexOf(action.timeline.id)
+            console.log("isi id object seletah: ", idObject)
             if (idObject > -1) {
                 return state
             }
@@ -77,45 +84,73 @@ export default function timeline(state = initialState, action) {
             return state
 
         case ADD_COMMENT:
-            console.log("init state: ", state)
-            console.log("init actiom: ", action)
+            // console.log("init state: ", state)
+            // console.log("init action: ", action)
             const timelines = state.filter((data) => {
+                // console.log("ini data: ", data)
                 // console.log(data.id, "===", action.idtimeline,data.id === action.idtimeline)
                 return data.id === action.idtimeline
             })
 
-            console.log("isi timeline: ", timelines[0])
+            // console.log("isi timeline: ", timelines[0])
             timelines[0].Comments.push({
                     id: action.id,
-                    comment: action.comment,
+                    // comment: action.comment,
+                    comment: 'temp',
                     User: action.User,
                     fake: true
                 })
-            return state.map((data) => data.id === action.idtimeline ? Object.assign({}, data, timelines[0]) : data)
-
-        case ADD_COMMENT_SUCCESS:
-
-            let comments = state.filter((data) => {
-                console.log(data.id, "===", action.idtimeline,data.id === action.idtimeline)
-                return data.id === action.idtimeline
+            return state.map((data) => {
+                // console.log("isi data: ", data)
+                return data.id === action.idtimeline ? Object.assign({}, data.Comments, timelines[0]) : data
             })
 
-            let idObjectComment = comments[0].map(function (x) {
+        case ADD_COMMENT_SUCCESS:
+            console.log("add commen success")
+            console.log("isi state: ", state)
+            console.log("init action: ", action)
+            // console.log("ini idtimeline: ", action.comment.TimelineId)
+            // console.log("isi state: ", state)
+            let commentsSuccess = state.filter((data) => {
+                console.log("isi data: ", data)
+                // console.log(data.id, "===", action.idtimeline,data.id === action.comment.TimelineId)
+                return data.id === action.comment.TimelineId
+            })
+
+            console.log("ini comment success: ", commentsSuccess)
+            console.log("ini comment success 0: ", commentsSuccess[0])
+
+            let idObjectComments = commentsSuccess[0].Comments.map(function (x) {
+                console.log("isi x: ", x)
                 return x.id
-            }).indexOf(action.comment.id)
+            })
+            console.log("ini id object comment: ", idObjectComments)
+
+            let idObjectComment = idObjectComments.indexOf(action.comment.id)
+
+            console.log("ini id object comment baru: ", idObjectComment)
             if (idObjectComment > -1) {
                 return state
             }
             else {
-                let newCommentFilter = comments[0].filter((data) => {
-                    // console.log("init data: ", data)
+                let newCommentFilter = commentsSuccess[0].Comments.filter((data) => {
+                    console.log("ini data: ", data)
                     return data.fake != true
                 })
-                return [action.comment, ...newCommentFilter]
+                console.log("newCommentFilter: ", newCommentFilter)
+                // console.log("hasil newCommentFilter: ", [...newCommentFilter, action.comment])
 
+
+                newCommentFilter.push(action.comment)
+                console.log("new comment filter baru: ", newCommentFilter)
+                return commentsSuccess[0].Comments.map((data) => {
+                    console.log("isi data terakir: ", data)
+                    return data.id === action.comment.TimelineId ? Object.assign({}, newCommentFilter) : data
+                })
             }
 
         case DELETE_COMMENT:
+            console.log("masuk delete")
             // console.log("ini state: ", state)
             console.log("ini action: ", action.IdComment)
 
@@ -129,13 +164,14 @@ export default function timeline(state = initialState, action) {
             return deleteComments[0].Comments.filter((deleteComments) => deleteComments.TempCommentId !== action.IdComment)
             // return deleteComments[0].Comments.map((data) => data.id === action.idtimeline ? Object.assign({}, data, timelines[0]) : data)
 
-        // case DELETE_COMMENT_SUCCESS:
-        //     const deleteCommentsSuccess = state.filter((data) => {
-        //         // console.log("ini data: ", data)
-        //         // console.log(data.id, "===", action.IdTimeline,data.id === action.IdTimeline)
-        //         return data.id === action.IdTimeline
-        //     })
-        //     return deleteCommentsSuccess
+        case DELETE_COMMENT_SUCCESS:
+            return state
+            // const deleteCommentsSuccess = state.filter((data) => {
+            //     // console.log("ini data: ", data)
+            //     // console.log(data.id, "===", action.IdTimeline,data.id === action.IdTimeline)
+            //     return data.id === action.IdTimeline
+            // })
+            // return deleteCommentsSuccess
 
         case LOAD_TIMELINES_FAILURE:
         case ADD_TIMELINE_FAILURE:

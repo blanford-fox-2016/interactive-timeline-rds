@@ -20,7 +20,7 @@ export default class FormTimeline extends Component {
         if (!timeline) {
             return
         }
-        this.props.onSave(1,timeline)
+        this.props.onSave(Auth.getUser().id,timeline)
         this.setState({
             timeline: ''
         })

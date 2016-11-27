@@ -15,9 +15,6 @@ module.exports = {
                 include: [
                     {
                         model: User
-                    },
-                    {
-                        model: Timeline
                     }
                 ],
 

@@ -3,6 +3,7 @@ import request from 'superagent'
 
 const SERVER_URL = 'http://localhost:3000/api/timelines'
 const SERVER_URL_COMMENTS = 'http://localhost:3000/api/comments'
+const SERVER_URL_USERS = 'http://localhost:3000/api/users'
 
 
 export function loadTimeline() {
@@ -52,7 +53,7 @@ export function addTimeline(UserId, timeline) {
     const TempTimelineId = Date.now().toString()
     let User = {
         id: UserId,
-        username: ''
+        username: Auth.getUser().username
     }
     return dispatch => {
         dispatch(addDataTimeline(TempTimelineId, User, timeline))
@@ -157,13 +158,14 @@ export function addCommentSuccess(comment) {
     return {type: types.ADD_COMMENT_SUCCESS, comment}
 }
 
-export function createComment(TimelineId, UserId, comment) {
+export function createComment(TimelineId, User, comment) {
     // console.log(`${TimelineId}, ${UserId}, ${comment}`)
     const TempCommentId = Date.now().toString()
-    let User = {
-        id: UserId,
-        username: ''
-    }
+    // let User = {
+    //     id: UserId,
+    //     username: Auth.getUser().username
+    // }
+    // console.log("isi user: ", User)
     return dispatch => {
         dispatch(addDataComment(TempCommentId, TimelineId, User, comment))
         return request
@@ -216,6 +218,74 @@ export function deleteComment(IdTimeline, IdComment){
                     dispatch(deleteCommentFailure())
                 }else{
                     dispatch(deleteCommentSuccess(res.body))
+                }
+            })
+    }
+}
+
+
+export function registerUserFailure() {
+    return {type: types.REGISTER_USER_FAILURE}
+}
+
+export function registerUserSuccess(user) {
+    return {type: types.REGISTER_USER_SUCCESS, user}
+}
+
+export function registerUser(name, email, username, password) {
+    let id = Date.now().toString()
+    return dispatch => {
+        return request
+            .post(`${SERVER_URL_USERS}/register`)
+            .type('form')
+            .send({
+                TempUserId: id,
+                name: name,
+                email: email,
+                username: username,
+                password: password
+            })
+            .set('Accept', 'application/json')
+            .end((err, res) => {
+                if (err) {
+                    console.error(err)
+                    dispatch(registerUserFailure())
+                }
+                else {
+                    dispatch(registerUserSuccess(res.body))
+                }
+            })
+    }
+}
+
+
+export function loginUserFailure() {
+    return {type: types.LOGIN_USER_FAILURE}
+}
+
+export function loginUserSuccess(user) {
+    return {type: types.LOGIN_USER_SUCCESS, user: user}
+}
+
+export function loginUser(username, password) {
+    console.log("mas")
+    return dispatch => {
+        return request
+            .post(`${SERVER_URL_USERS}/login`)
+            .type('form')
+            .send({
+                username: username,
+                password: password
+            })
+            .set('Accept', 'application/json')
+            .end((err, res) => {
+                if (err) {
+                    console.error(err)
+                    dispatch(loginUserFailure())
+                }
+                else {
+                    console.log("ini body: ", res.body)
+                    dispatch(loginUserSuccess(res.body))
                 }
             })
     }

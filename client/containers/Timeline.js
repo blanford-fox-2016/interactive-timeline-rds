@@ -5,6 +5,7 @@ import * as AppActions from '../actions'
 import ListItem from '../components/ListTimeline'
 import FormTimeline from '../components/FormTimeline'
 import Auth from '../components/Auth'
+import { Link, browserHistory } from 'react-router'
 
 class Timeline extends Component {
 
@@ -17,39 +18,65 @@ class Timeline extends Component {
         const {timelineReducers, actions} = this.props
         // console.log("Dari timeline: ", commentReducers)
 
-        if (!Auth.getToken) {
-            return(
-                <div>
-                    <Auth/>
-                </div>
-            )
-        }
-        else {
-            return(
-                <div className="container">
 
-                    <div className="row">
-                        <div className="col-sm-8 col-sm-offset-2">
-                            <div className="jumbotron text-center">
-                                <h3>Interactive Timeline RDS</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="row">
-                        <div className="col-sm-8 col-sm-offset-2">
-                            <FormTimeline onSave={actions.addTimeline}/>
-                        </div>
-                    </div>
-
-                    <div className="row">
-                        <div className="col-sm-8 col-sm-offset-2">
-                            <ListItem timelineReducers={timelineReducers} actions={actions}/>
+        return(
+            <div className="container">
+                <Link to="/login">Login</Link>
+                <div className="row">
+                    <div className="col-sm-8 col-sm-offset-2">
+                        <div className="jumbotron text-center">
+                            <h3>Interactive Timeline RDS</h3>
                         </div>
                     </div>
                 </div>
-            )
-        }
+
+                <div className="row">
+                    <div className="col-sm-8 col-sm-offset-2">
+                        <FormTimeline onSave={actions.addTimeline}/>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col-sm-8 col-sm-offset-2">
+                        <ListItem timelineReducers={timelineReducers} actions={actions}/>
+                    </div>
+                </div>
+            </div>
+        )
+
+        // if (!Auth.getToken) {
+        //     return(
+        //         <div>
+        //             <Auth loginUser={actions.loginUser} registerUser={actions.registerUser} />
+        //         </div>
+        //     )
+        // }
+        // else {
+        //     return(
+        //         <div className="container">
+        //
+        //             <div className="row">
+        //                 <div className="col-sm-8 col-sm-offset-2">
+        //                     <div className="jumbotron text-center">
+        //                         <h3>Interactive Timeline RDS</h3>
+        //                     </div>
+        //                 </div>
+        //             </div>
+        //
+        //             <div className="row">
+        //                 <div className="col-sm-8 col-sm-offset-2">
+        //                     <FormTimeline onSave={actions.addTimeline}/>
+        //                 </div>
+        //             </div>
+        //
+        //             <div className="row">
+        //                 <div className="col-sm-8 col-sm-offset-2">
+        //                     <ListItem timelineReducers={timelineReducers} actions={actions}/>
+        //                 </div>
+        //             </div>
+        //         </div>
+        //     )
+        // }
     }
 }
 

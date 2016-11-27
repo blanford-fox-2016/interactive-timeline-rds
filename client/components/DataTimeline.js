@@ -65,7 +65,11 @@ class DataItem extends Component {
             return
         }
         // console.log(this.props.timelineReducers)
-        this.props.createComment(this.props.timelineReducers.id, 1, comment)
+        let User = {
+            id: Auth.getUser().id,
+            username: Auth.getUser().username
+        }
+        this.props.createComment(this.props.timelineReducers.id, User, comment)
         this.setState({
             comment: ''
         })
