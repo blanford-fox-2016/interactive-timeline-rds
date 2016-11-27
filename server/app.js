@@ -34,6 +34,7 @@ passport.use(new LocalStrategy(
   function (username, password, done) {
     models.User.find({ where: {username: username, password: crypto.createHash('md5').update(password).digest("hex") } })
       .then(function (user) {
+        console.log('user : ', user);
         if (user !== null) {
           console.log('[AUTH] Success with username: ' + user.username + ' and password (md5-hash): ' + user.password);
           return done(null, user);

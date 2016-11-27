@@ -98,11 +98,13 @@ export default class AuthPage extends Component {
     render() {
         if (!this.state.match) {
             return (
+              <div className="container">
                 <div className="alert alert-danger">
                     <button onClick={this.handleMatch.bind(this)} className="btn btn-xs btn-danger pull-right">Try again</button>
                     <strong>Confirm Password not match</strong><br/>
                     Please type the password carefully
                 </div>
+              </div>
             )
         } else {
             if (!this.state.isLogin) {

@@ -32,28 +32,30 @@ export function loadPostFailure() {
 }
 
 export function addPost(contentParameter) {
+  console.log('add post basic content param : ', contentParameter);
     return {type: types.ADD_POST, content: contentParameter}
 }
 
 export function addPostFailure() {
+  console.log('add fail');
     return {type: types.ADD_POST_FAILURE}
 }
 
 export function addPostSuccess(content) {
+  console.log('add success : ', content);
     return {type: types.ADD_POST_SUCCESS, content: content}
 }
 
 export function addPostProcess(content) {
-    let UserId = Date.now().toString()
     return dispatch => {
-      console.log('aaaaa');
-      console.log(Auth.getUser());
+      console.log('add post process : ', content);
         dispatch(addPost(content))
         return request.post(SERVER_URL).type('form').send({content: content, user_id: Auth.getUser().id}).set('Accept', 'application/json').end((err, res) => {
             if (err) {
                 console.log(err);
                 dispatch(addPostFailure())
             } else {
+              console.log('success add process');
                 dispatch(addPostSuccess(res.body))
             }
         })
@@ -136,6 +138,7 @@ export function loginProcess(usernameLogin, passwordLogin) {
         console.log('dispatch');
         dispatch(login(usernameLogin, passwordLogin))
         return request.post(SERVER_URL_LOGIN).type('form').send({username: usernameLogin, password: passwordLogin}).set('Accept', 'application/json').end((err, res) => {
+          console.log('res :', res);
             if (err) {
                 console.log(err);
                 console.log('login error');
@@ -151,7 +154,7 @@ export function loginProcess(usernameLogin, passwordLogin) {
 
 export function register(name, usernameRegister, passwordRegister, email, image_url) {
     return {
-        type: types.LOGIN_PROCESS,
+        type: types.REGISTER_PROCESS,
         name: name,
         username: usernameRegister,
         password: passwordRegister,
@@ -161,21 +164,22 @@ export function register(name, usernameRegister, passwordRegister, email, image_
 }
 
 export function registerSuccess(userToken) {
-    console.log('return after register success');
-    console.log('userToken : ', userToken);
     if (userToken) {
-        Auth.authenticateUser(userToken)
-        return {type: types.LOGIN_PROCESS_SUCCESS}
-    } else {}
+      Auth.authenticateUser(userToken)
+      return {type: types.REGISTER_PROCESS_SUCCESS}
+    } else {
+      console.log('token not found. registration failed : /actions/index.js > 171');
+    }
 }
 
 export function registerFailure() {
-    return {type: types.LOGIN_PROCESS_FAILURE}
+    return {type: types.REGISTER_PROCESS_FAILURE}
 }
 
 export function registerProcess(name, usernameRegister, passwordRegister, email, image_url) {
     console.log('register process');
     return dispatch => {
+        console.log('new user : ',{name: name, username: usernameRegister, password: passwordRegister, email: email, image_url: image_url});
         dispatch(register(name, usernameRegister, passwordRegister, email, image_url))
         return request.post(SERVER_URL_REGISTER).type('form').send({name: name, username: usernameRegister, password: passwordRegister, email: email, image_url: image_url}).set('Accept', 'application/json').end((err, res) => {
             if (err) {

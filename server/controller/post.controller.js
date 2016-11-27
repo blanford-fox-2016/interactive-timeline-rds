@@ -26,7 +26,7 @@ module.exports = {
     },
     createNewPost: function(req, res, next) {
         post.create({content: req.body.content, UserId: req.body.user_id}).then((data) => {
-            res.json(data)
+            console.log(data);
         })
     },
     editPost: function(req, res, next) {

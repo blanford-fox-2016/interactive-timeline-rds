@@ -31,7 +31,7 @@ class Navbar extends Component {
                   <li><Link to="/data">Data</Link></li>
                   <li><Link to="/datadate">Data Date</Link></li>
                 </ul> */}
-                <button className="btn btn-primary raised" onClick={this.handleLogout.bind(this)}>Logout</button>
+                <button className="btn btn-primary raised navbut" onClick={this.handleLogout.bind(this)}>Logout</button>
                     </div>
                 </div>
             </nav>

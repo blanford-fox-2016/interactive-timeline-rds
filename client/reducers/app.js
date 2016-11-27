@@ -32,8 +32,13 @@ export default function data(state = initialState, objFromUserAction) {
         case ADD_POST:
             return [
                 {
-                    id: '-',
+                    id: Date.now(),
+                    UserId: Date.now(),
                     content: objFromUserAction.content,
+                    User: {
+                      image_url: Auth.getUser().image_url,
+                      name: Auth.getUser().name
+                    },
                     fake: true
                 },
                 ...state
@@ -50,9 +55,11 @@ export default function data(state = initialState, objFromUserAction) {
                 let newArray = state.filter((data)=> {
                   return data.fake != true
                 })
+                console.log('add post success obj : ', objFromUserAction);
+                console.log('add post success new : ', newArray);
 
                 return [
-                    objFromUserAction.content, ...newArray
+                  objFromUserAction, ...newArray
                 ]
             }
         case EDIT_POST:
