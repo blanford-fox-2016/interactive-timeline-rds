@@ -37,8 +37,8 @@ class DataTimeline extends Component {
       return (
         <div>
           <div className="form-group">
-            <label>Name</label>
-            <textarea className="form-control" placeholder="Update your status" value={this.state.content} onChange={this.handleContentChange.bind(this)} ></textarea>
+            <label htmlFor="edit_timeline">Edit Timeline</label>
+            <textarea id="edit_timeline" className="form-control" placeholder="Update your status" value={this.state.content} onChange={this.handleContentChange.bind(this)} ></textarea>
           </div>
           <button className="btn btn-default" onClick={this.handleSaveEdit.bind(this)} type="button"><span className="glyphicon glyphicon-pencil"></span>Edit Post</button>
           <button className="btn btn-default" onClick={this.handleCancelEdit.bind(this)} type="button">Cancel</button>
@@ -46,10 +46,10 @@ class DataTimeline extends Component {
       )
     } else {
       return (
-        <div>
+        <div className="panel panel-default">
           <div className="panel-body">
             <span>
-              <h3>{data.User.username}</h3>
+              <h3>{data.User.username + " - " + data.User.email}</h3>
               {data.content}
             </span>
           </div>

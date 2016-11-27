@@ -12,9 +12,12 @@ export default class ListTimelines extends Component {
             return (<DataTimeline key={item.id} data={item} {...actions}/>)
         })
         return (
-            <div className="panel panel-default">
+          <div>
+            <div>
                 {dataNodes}
             </div>
+            <hr />
+          </div>
         )
     }
 }

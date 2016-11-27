@@ -17,6 +17,7 @@ class App extends Component {
               <Navbar/>
               <div className="container">
                   <FormAddTimeline onSave={actions.addTimeline}/>
+                  <hr />
                   <ListTimelines data={data} actions={actions}/>
               </div>
           </div>
@@ -30,12 +31,12 @@ App.propTypes = {
 }
 
 function mapStateToProps(state) {
-    return {data: state.data}
+    return {data: state.data} // state.data berhubungan ke index reducers
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(AppActions, dispatch)
+        actions: bindActionCreators(AppActions, dispatch)// penghubung reducers ke actions
     }
 }
 

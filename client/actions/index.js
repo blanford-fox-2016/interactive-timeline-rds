@@ -24,8 +24,8 @@ export function addTimeline(content){
   // var id = Date.now().toString()
   //temporary user
   var User = {
-    username: 'temp',
-    email: 'temp@temp.com'
+    username: '',
+    email: ''
   }
   return dispatch => {
     dispatch(addData(content, User))

@@ -13,6 +13,7 @@ import {ADD_TIMELINE,
         from '../constants/ActionTypes'
 
 const initialState = []
+let index = 0
 
 export default function data(state = initialState, action){
   switch (action.type) {
@@ -24,45 +25,52 @@ export default function data(state = initialState, action){
 
     case ADD_TIMELINE:
       // id, User temporary
-      console.log(state);
       return [{
         id: state.length === 0 ? 1 : state[0].id+1,
         User: action.User,
-        content: action.content
+        content: action.content,
+        status: "temp"
       },
       ...state
       ]
 
     case ADD_TIMELINES_SUCCESS:
-      // let timelines = state
-      // let idObject = timelines.map(function(x){
-      //   return x.id
-      // }).indexOf(action.timeline.id)
-      // console.log(state);
-      // // console.log(action.timeline);
-      // // console.log(idObject);
-      // if(idObject > -1){
-      //   // state.splice(idObject, 1)
-      //   // console.log(state);
-      //   return state
-      // }else{
-      //   return [action.timeline, ...state]
-      // }
-      // console.log(action.timeline);
+      let timelines = state
+      indexx = timelines.map(function(x){
+        return x.id
+      }).indexOf(action.timeline.id)
+
+      if(index > -1 || timelines[0]){
+        let newData = timelines.filter((data) => {return data.status != "temp"})
+        return [action.timeline, ...newData]
+      }else{
+        return [action.timeline, ...state]
+      }
+
       // ini untuk pake id default dari db
-      return state.map(data => (data.id === action.timeline.id || state[0]) ? Object.assign({}, data, {User: action.timeline.User}): data)
+      // alternative :
+      // return state.map(data => (data.id === action.timeline.id || state[0]) ? Object.assign({}, data, {User: action.timeline.User}): data)
 
     case EDIT_TIMELINE:
       return state.map(data => data.id === action.id ? Object.assign({}, data, {content: action.content}): data)
 
     case EDIT_TIMELINES_SUCCESS:
-      return state
+      index = state.map(function(data){
+        return data.content
+      }).indexOf(action.timeline.content)
+      console.log(index);
+      if(index === -1){
+        return state.map(data => data.id === index ? Object.assign({}, data, {content: action.content}): data)
+      }else{
+        return state
+      }
 
     case DELETE_TIMELINE:
       return state.filter(data => data.id !== action.id)
 
     case DELETE_TIMELINES_SUCCESS:
-      return state
+      index = state.map((data) => {return data.id}).indexOf(action.timeline.id)
+      return index === -1 ? state : state.filter(data => data.id !== action.id)
 
     default:
     case DELETE_TIMELINES_FAILURE:
