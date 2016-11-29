@@ -9,7 +9,7 @@ const store = configureStore()
 
 render(
     <Provider store={store}>
-        <Timeline data={Auth.getToken()} actions=""/>
+        <Timeline actions=""/>
     </Provider>,
     document.getElementById('root')
 )

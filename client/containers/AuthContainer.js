@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as AppActions from '../actions'
-import Auth from '../components/Auth'
+import AuthComponent from '../components/AuthComponent'
 import { Link, browserHistory } from 'react-router'
 
 class AuthContainer extends Component {
@@ -13,7 +13,7 @@ class AuthContainer extends Component {
 
         return(
             <div>
-                <Auth loginUser={actions.loginUser} registerUser={actions.registerUser} />
+                <AuthComponent loginUser={actions.loginUser} registerUser={actions.registerUser} />
             </div>
         )
     }

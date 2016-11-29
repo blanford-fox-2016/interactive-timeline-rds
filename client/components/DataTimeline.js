@@ -3,6 +3,7 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import * as AppActions from '../actions'
 import ListComment from './ListComment'
+import {Auth} from '../public/scripts/token'
 
 class DataItem extends Component {
     constructor(props) {

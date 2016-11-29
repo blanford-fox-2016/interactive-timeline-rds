@@ -24,6 +24,7 @@ module.exports = {
                 password: req.body.password
             }
         }).then((data) => {
+            console.log(data)
             res.status(200).json({
                 token: jwt.sign({
                     id: data.id,

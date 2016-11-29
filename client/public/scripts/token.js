@@ -1,4 +1,6 @@
-const Auth = {
+
+
+export const Auth = {
     authenticateUser: (data) => {
         console.log(data)
         if (data.status === 'error') console.log('No account:', data)
@@ -21,3 +23,4 @@ const Auth = {
         }
     }
 }
+

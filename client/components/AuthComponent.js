@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react'
+import {Auth} from '../public/scripts/token'
 
-export default class Auth extends Component {
+export default class AuthComponent extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -131,7 +132,7 @@ export default class Auth extends Component {
     }
 }
 
-Auth.propTypes = {
+AuthComponent.propTypes = {
     // timeline: PropTypes.string,
     // onSave: PropTypes.func.isRequired
 }

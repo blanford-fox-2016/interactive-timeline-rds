@@ -5,6 +5,8 @@ const SERVER_URL = 'http://localhost:3000/api/timelines'
 const SERVER_URL_COMMENTS = 'http://localhost:3000/api/comments'
 const SERVER_URL_USERS = 'http://localhost:3000/api/users'
 
+import {Auth} from '../public/scripts/token'
+
 
 export function loadTimeline() {
     return {type: types.LOAD_TIMELINES}
@@ -49,11 +51,11 @@ export function addTimelineSuccess(timeline) {
     return {type: types.ADD_TIMELINE_SUCCESS, timeline}
 }
 
-export function addTimeline(UserId, timeline) {
+export function addTimeline(dataUser, timeline) {
     const TempTimelineId = Date.now().toString()
     let User = {
-        id: UserId,
-        username: Auth.getUser().username
+        id: dataUser.id,
+        username: dataUser.username
     }
     return dispatch => {
         dispatch(addDataTimeline(TempTimelineId, User, timeline))

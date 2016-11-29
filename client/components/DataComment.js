@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react'
+import {Auth} from '../public/scripts/token'
 
 class DataComment extends Component {
     constructor(props) {

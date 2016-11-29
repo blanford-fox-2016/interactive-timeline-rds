@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-
+import {Auth} from '../public/scripts/token'
 export default class FormTimeline extends Component {
     constructor(props) {
         super(props)
@@ -20,7 +20,11 @@ export default class FormTimeline extends Component {
         if (!timeline) {
             return
         }
-        this.props.onSave(Auth.getUser().id,timeline)
+        let User = {
+            id:Auth.getUser().id,
+            username: Auth.getUser().username
+        }
+        this.props.onSave(User, timeline)
         this.setState({
             timeline: ''
         })

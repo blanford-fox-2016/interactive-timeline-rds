@@ -4,7 +4,8 @@ import {connect} from 'react-redux'
 import * as AppActions from '../actions'
 import ListItem from '../components/ListTimeline'
 import FormTimeline from '../components/FormTimeline'
-import Auth from '../components/Auth'
+import AuthComponent from '../components/AuthComponent'
+import {Auth} from '../public/scripts/token'
 import { Link, browserHistory } from 'react-router'
 
 class Timeline extends Component {
@@ -15,7 +16,7 @@ class Timeline extends Component {
     }
 
     render() {
-        const {timelineReducers, actions, data} = this.props
+        const {timelineReducers, actions} = this.props
         // console.log("Dari timeline: ", commentReducers)
 
         // return(
@@ -67,10 +68,10 @@ class Timeline extends Component {
         //     </div>
         // )
 
-        if (!data) {
+        if (!Auth.getToken()) {
             return(
                 <div>
-                    <Auth loginUser={actions.loginUser} registerUser={actions.registerUser} />
+                    <AuthComponent loginUser={actions.loginUser} registerUser={actions.registerUser} />
                 </div>
             )
         }

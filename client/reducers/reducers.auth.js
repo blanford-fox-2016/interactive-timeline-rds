@@ -8,7 +8,7 @@ import {
     REGISTER_USER_FAILURE
 
 } from '../constant/ActionTypes'
-
+import {Auth} from '../public/scripts/token'
 const initialState = []
 
 export default function timeline(state = initialState, action) {
@@ -17,7 +17,7 @@ export default function timeline(state = initialState, action) {
         case LOGIN_USER_SUCCESS:
             console.log("ini action: ", action)
             Auth.authenticateUser(action.user)
-            // browserHistory.push('/')
+            window.location = '/'
             return state
 
         case LOGIN_USER_FAILURE:
