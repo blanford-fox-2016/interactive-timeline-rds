@@ -16,7 +16,19 @@ import {
   LOGIN_PROCESS_FAILURE,
   REGISTER_PROCESS,
   REGISTER_PROCESS_SUCCESS,
-  REGISTER_PROCESS_FAILURE
+  REGISTER_PROCESS_FAILURE,
+  LOAD_COMMENT,
+  LOAD_COMMENT_SUCCESS,
+  LOAD_COMMENT_FAILURE,
+  ADD_COMMENT,
+  ADD_COMMENT_SUCCESS,
+  ADD_COMMENT_FAILURE,
+  EDIT_COMMENT,
+  EDIT_COMMENT_SUCCESS,
+  EDIT_COMMENT_FAILURE,
+  DELETE_COMMENT,
+  DELETE_COMMENT_SUCCESS,
+  DELETE_COMMENT_FAILURE
 } from '../constants/ActionTypes'
 
 const initialState = []
@@ -27,6 +39,7 @@ export default function data(state = initialState, objFromUserAction) {
             return []
 
         case LOAD_POST_SUCCESS:
+        console.log('load post reducer :',objFromUserAction);
             return objFromUserAction.fromDatabase
 
         case ADD_POST:
@@ -92,6 +105,16 @@ export default function data(state = initialState, objFromUserAction) {
             return state
 
         case REGISTER_PROCESS_FAILURE:
+            return state
+
+        case LOAD_COMMENT:
+            return []
+
+        case LOAD_COMMENT_SUCCESS:
+        console.log('reducer coment :', objFromUserAction);
+            return objFromUserAction.fromDatabaseComment
+
+        case LOAD_COMMENT_FAILURE:
             return state
 
         default:

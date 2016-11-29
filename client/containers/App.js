@@ -21,7 +21,7 @@ class App extends Component {
                           </div>
                       </div>
                       <FormAdd onSave={magicActionFromRedux.addPostProcess}/>
-                      <ListItem data={magicDataFromRedux} actions={magicActionFromRedux}/>
+                      <ListItem data={magicDataFromRedux} actions={magicActionFromRedux} />
                   </div>
               </div>
           )
@@ -33,6 +33,7 @@ class App extends Component {
     }
     componentDidMount() {
       this.props.magicActionFromRedux.loadPostProcess()
+      // this.props.magicActionFromRedux.loadCommentProcess()
     }
 }
 

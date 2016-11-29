@@ -2,6 +2,7 @@ import * as types from '../constants/ActionTypes'
 import request from 'superagent'
 
 const SERVER_URL = 'http://localhost:3000/api/post'
+const SERVER_URL_COMMENT = 'http://localhost:3000/api/comment'
 const SERVER_URL_LOGIN = 'http://localhost:3000/api/auth/login'
 const SERVER_URL_REGISTER = 'http://localhost:3000/api/auth/register'
 
@@ -17,6 +18,7 @@ export function loadPostProcess(content) {
                 console.log(err);
                 dispatch(loadPostFailure())
             } else {
+              console.log('body : ', res.body);
                 dispatch(loadPostSuccess(res.body))
             }
         })
@@ -191,4 +193,31 @@ export function registerProcess(name, usernameRegister, passwordRegister, email,
             }
         })
     }
+}
+
+export function loadComment() {
+    return {type: types.LOAD_COMMENT}
+}
+
+export function loadCommentProcess(content) {
+    return dispatch => {
+        dispatch(loadComment())
+        return request.get(SERVER_URL_COMMENT).set('Accept', 'application/json').end((err, res) => {
+            if (err) {
+                console.log(err);
+                dispatch(loadCommentFailure())
+            } else {
+                dispatch(loadCommentSuccess(res.body))
+            }
+        })
+    }
+}
+
+export function loadCommentSuccess(content) {
+  console.log('ajax :', content);
+    return {type: types.LOAD_COMMENT_SUCCESS, fromDatabaseComment: content}
+}
+
+export function loadCommentFailure() {
+    return {type: types.LOAD_COMMENT_FAILURE}
 }

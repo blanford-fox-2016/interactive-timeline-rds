@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react'
+import CommentList from './CommentList'
 
 export default class DataItem extends Component {
     constructor(props) {
@@ -7,6 +8,7 @@ export default class DataItem extends Component {
             editing: false,
             commenting: false,
             content: this.props.data.content || '',
+            comment: this.props.data.comment || ''
         }
     }
     handleContentChange(e) {
@@ -20,6 +22,19 @@ export default class DataItem extends Component {
     }
     handleCommentClick() {
       this.setState({commenting: true})
+    }
+    handleCommentChange(e) {
+      this.setState({comment: this.props.data.comment})
+    }
+    submitComment(e) {
+      e.preventDefault()
+      let comment = this.state.comment.trim()
+      if(!comment) {
+        return;
+      } else {
+        this.props.commentProcess(this.props.data.id, Auth.getUser().id)
+        this.setState({commenting: false})
+      }
     }
     handleSaveEdit(e) {
         e.preventDefault()
@@ -113,13 +128,13 @@ export default class DataItem extends Component {
                       <div className="well">
                         {data.content}
                       </div>
-                          <form className='well'>
+                          <form className='well' onSubmit={this.submitComment.bind(this)}>
                               <div className="form-group">
                                   <label>Comment to this post:</label>
-                                  <input type="text" className="form-control" id="form-content" placeholder="Enter New Content" value={this.state.content} onChange={this.handleContentChange.bind(this)}/>
+                                  <input type="text" className="form-control" id="form-content" placeholder="Post New Comment" onChange={this.handleCommentChange.bind(this)}/>
                               </div>
                               <span>
-                              <button className="btn btn-success raised btn-space" type="submit">
+                              <button className="btn btn-primary raised btn-space" type="submit">
                                   <span className="glyphicon glyphicon-ok"></span>          Post Comment</button>
                                   <button className="btn btn-default raised" onClick={this.handleCancel.bind(this)}>
                                   <span className="glyphicon glyphicon-repeat"></span>          Cancel</button>
@@ -132,6 +147,7 @@ export default class DataItem extends Component {
             </div>
           )
         }else {
+          if (data.User.name == Auth.getUser().name) {
             return (
 <div className = "container"><div className = "qa-message-list" id = "wallmessages"> <div className="message-item" id="m16">
                 <div className="message-inner">
@@ -162,7 +178,7 @@ export default class DataItem extends Component {
                     </div>
                     <div className="qa-message-content">
                       <div className="well">
-                        <span>{data.content}    <span className="pull-right"><button className="btn btn-default btn-xs btn-space raised" type="button" onClick={() => this.handleCommentClick(data.id)}>
+                        <span>{data.content}    <span className="pull-right"><button className="btn btn-default btn-xs btn-space raised" type="button" onClick={() => this.handleCommentClick()}>
                       <span className="glyphicon glyphicon-comment"></span>   Comment</button>
                           <button className="btn btn-success btn-xs btn-space raised" type="button" onClick={() => this.handleEditClick(data.id)}>
                       <span className="glyphicon glyphicon-edit"></span>   Edit</button>
@@ -172,12 +188,57 @@ export default class DataItem extends Component {
                       <span className="glyphicon glyphicon-trash"></span>   Delete</button></span>
                           </span>
                         </div>
+                        {/* <CommentList data={data}/> */}
                     </div>
                 </div>
             </div>
           </div>
   </div>
       )
+          } else {
+            return (
+<div className = "container"><div className = "qa-message-list" id = "wallmessages"> <div className="message-item" id="m16">
+                <div className="message-inner">
+                    <div className="message-head clearfix">
+                        <div className="avatar pull-left">
+                            <a href="./index.php?qa=user&qa_1=Oleg+Kolesnichenko">
+                                <img src={data.User.image_url}/></a>
+                        </div>
+                        <div className="user-detail">
+                            <h5 className="handle">{data.User.name}</h5>
+                            <div className="post-meta">
+                                <div className="asker-meta">
+                                    <span className="qa-message-what"></span>
+                                    <span className="qa-message-when">
+                                        <span className="qa-message-when-data">
+
+                                        </span>
+                                    </span>
+                                    <span className="qa-message-who">
+                                        <span className="qa-message-who-pad">
+                                        </span>
+                                        <span className="qa-message-who-data">
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="qa-message-content">
+                      <div className="well">
+                        <span>{data.content}    <span className="pull-right"><button className="btn btn-default btn-xs btn-space raised" type="button" onClick={() => this.handleCommentClick()}>
+                      <span className="glyphicon glyphicon-comment"></span>   Comment</button>
+                          </span>
+                          </span>
+                        </div>
+                        {/* <CommentList data={data}/> */}
+                    </div>
+                </div>
+            </div>
+          </div>
+  </div>
+      )
+          }
     }
   }
 }
