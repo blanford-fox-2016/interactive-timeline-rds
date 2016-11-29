@@ -78,6 +78,7 @@ class DataItem extends Component {
 
     render() {
         const {timelineReducers, commentReducers} = this.props
+        console.log("isi timeline reducers di datatimeline: ", timelineReducers)
         if (this.state.editing) {
             return(
                 <div className="panel panel-default">
@@ -97,46 +98,91 @@ class DataItem extends Component {
         }
         else {
             // console.log("dari data timeline: ", timelineReducers.Comments)
-            return (
-                <div className="panel panel-default">
-                    <div className="panel-heading">
-                        <button onClick={this.clickDeleteTimeline.bind(this)} className="btn btn-danger">Delete</button>
-                        <button onClick={this.clickEditTimeline.bind(this)} className="btn btn-warning">Edit</button>
-                    </div>
-                    <div className="panel-body">
 
-                        <div className="panel-group">
-                            <div className="panel panel-default">
-                                <div className="panel-heading">
-                                    <div className="panel-title">
-                                        <h3>
-                                            <a data-toggle="collapse" href={'#collapse'+timelineReducers.id}>
-                                                {timelineReducers.User.username}
-                                            </a>
-                                        </h3>
-                                        <p>{timelineReducers.timeline}</p>
-                                    </div>
-                                </div>
-                                <div id={'collapse'+timelineReducers.id} className="panel-collapse collapse in">
-                                    <div className="panel-body">
-                                        <ListComment commentReducers={timelineReducers.Comments} deleteComment={this.props.deleteComment} />
-                                    </div>
-                                </div>
-                            </div>
+            if (timelineReducers.User.id == Auth.getUser().id) {
+                return (
+                    <div className="panel panel-default">
+                        <div className="panel-heading">
+                            <button onClick={this.clickDeleteTimeline.bind(this)} className="btn btn-danger">Delete</button>
+                            <button onClick={this.clickEditTimeline.bind(this)} className="btn btn-warning">Edit</button>
                         </div>
+                        <div className="panel-body">
 
-                    </div>
-                    <div className="panel-footer">
-                        <form onSubmit={this.handleCreateComment.bind(this)}m className="form-inline">
-                            <div className="form-group">
-                                <label>Photo</label>
-                                <input value={this.state.comment} onChange={this.handleCommentChange.bind(this)} type="text" className="form-control" />
+                            <div className="panel-group">
+                                <div className="panel panel-default">
+                                    <div className="panel-heading">
+                                        <div className="panel-title">
+                                            <h3>
+                                                <a data-toggle="collapse" href={'#collapse'+timelineReducers.id}>
+                                                    {timelineReducers.User.username}
+                                                </a>
+                                            </h3>
+                                            <p>{timelineReducers.timeline}</p>
+                                        </div>
+                                    </div>
+                                    <div id={'collapse'+timelineReducers.id} className="panel-collapse collapse in">
+                                        <div className="panel-body">
+                                            <ListComment commentReducers={timelineReducers.Comments} deleteComment={this.props.deleteComment} editComment={this.props.editComment}/>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <button type="submit" className="btn btn-default">Submit</button>
-                        </form>
+
+                        </div>
+                        <div className="panel-footer">
+                            <form onSubmit={this.handleCreateComment.bind(this)}m className="form-inline">
+                                <div className="form-group">
+                                    <label>Photo</label>
+                                    <input value={this.state.comment} onChange={this.handleCommentChange.bind(this)} type="text" className="form-control" />
+                                </div>
+                                <button type="submit" className="btn btn-default">Submit</button>
+                            </form>
+                        </div>
                     </div>
-                </div>
-            )
+                )
+            }
+            else {
+                return (
+                    <div className="panel panel-default">
+                        <div className="panel-heading">
+
+                        </div>
+                        <div className="panel-body">
+
+                            <div className="panel-group">
+                                <div className="panel panel-default">
+                                    <div className="panel-heading">
+                                        <div className="panel-title">
+                                            <h3>
+                                                <a data-toggle="collapse" href={'#collapse'+timelineReducers.id}>
+                                                    {timelineReducers.User.username}
+                                                </a>
+                                            </h3>
+                                            <p>{timelineReducers.timeline}</p>
+                                        </div>
+                                    </div>
+                                    <div id={'collapse'+timelineReducers.id} className="panel-collapse collapse in">
+                                        <div className="panel-body">
+                                            <ListComment commentReducers={timelineReducers.Comments} deleteComment={this.props.deleteComment} editComment={this.props.editComment}/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div className="panel-footer">
+                            <form onSubmit={this.handleCreateComment.bind(this)}m className="form-inline">
+                                <div className="form-group">
+                                    <label>Photo</label>
+                                    <input value={this.state.comment} onChange={this.handleCommentChange.bind(this)} type="text" className="form-control" />
+                                </div>
+                                <button type="submit" className="btn btn-default">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                )
+            }
+
         }
 
     }

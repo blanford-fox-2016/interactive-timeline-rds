@@ -14,7 +14,7 @@ export default class ListItem extends Component {
         let arrComment = commentReducers ? commentReducers : []
         const commentNodes = arrComment.map(function (item) {
             return(
-                <DataComment key={item.id} commentReducers={item} deleteComment={this.props.deleteComment} />
+                <DataComment key={item.id} commentReducers={item} deleteComment={this.props.deleteComment} editComment={this.props.editComment} />
             )
         }.bind(this))
 

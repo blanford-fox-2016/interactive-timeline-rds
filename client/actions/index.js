@@ -224,6 +224,40 @@ export function deleteComment(IdTimeline, IdComment){
 }
 
 
+
+export function editDataComment(IdTimeline, IdComment, comment){
+    return {type: types.EDIT_COMMENT, IdTimeline, IdComment, comment}
+}
+
+
+export function editCommentFailure(){
+    return {type: types.EDIT_COMMENT_FAILURE}
+}
+
+export function editCommentSuccess(comment){
+    return {type: types.EDIT_COMMENT_SUCCESS, comment}
+}
+
+export function editComment(IdTimeline, IdComment, comment){
+    return dispatch => {
+        dispatch(editDataComment(IdTimeline, IdComment, comment))
+        return request
+            .put(SERVER_URL_COMMENTS)
+            .send({
+                TempCommentId: IdComment,
+                comment: comment
+            })
+            .end((err, res) => {
+                if(err){
+                    console.error(err);
+                    dispatch(editCommentFailure())
+                }else{
+                    dispatch(editCommentSuccess(res.body))
+                }
+            })
+    }
+}
+
 export function registerUserFailure() {
     return {type: types.REGISTER_USER_FAILURE}
 }

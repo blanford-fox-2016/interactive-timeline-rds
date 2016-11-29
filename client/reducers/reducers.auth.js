@@ -20,11 +20,6 @@ export default function timeline(state = initialState, action) {
             // browserHistory.push('/')
             return state
 
-        case LOGIN_USER_SUCCESS:
-            // Auth.authenticateUser(action.user)
-            // browserHistory.push('/')
-            return state
-
         case LOGIN_USER_FAILURE:
         case REGISTER_USER_FAILURE:
             console.log("gagal")

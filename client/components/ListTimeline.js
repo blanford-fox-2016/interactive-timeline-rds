@@ -12,10 +12,10 @@ export default class ListItem extends Component {
 
         const {timelineReducers, actions} = this.props
 
-        // console.log("dari listtimeine: ", timelineReducers)
+        console.log("dari listtimeine: ", timelineReducers)
 
         let timelineNodes = timelineReducers.map(function (item) {
-
+            console.log("ini item: ", item)
             return(
                 <DataTimeline key={item.id} timelineReducers={item} {...actions} />
             )
