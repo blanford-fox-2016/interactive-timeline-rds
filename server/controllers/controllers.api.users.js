@@ -11,7 +11,13 @@ module.exports = {
             username: req.body.username,
             password: req.body.password
         }).then((data) => {
-            res.json(data)
+            res.status(200).json({
+                token: jwt.sign({
+                    id: data.id,
+                    username: data.username,
+                    email: data.email
+                }, process.env.SESSION_SECRET)
+            })
         }).catch((err) => {
             res.json(err)
         })

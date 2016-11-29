@@ -20,6 +20,12 @@ export default function timeline(state = initialState, action) {
             window.location = '/'
             return state
 
+        case REGISTER_USER_SUCCESS:
+            console.log("ini action: ", action)
+            Auth.authenticateUser(action.user)
+            window.location = '/'
+            return state
+
         case LOGIN_USER_FAILURE:
         case REGISTER_USER_FAILURE:
             console.log("gagal")
