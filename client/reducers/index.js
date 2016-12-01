@@ -1,8 +1,8 @@
 import {combineReducers} from 'redux'
-import data from './app'
+import reducers_timelines from './reducers.timelines'
 
 const rootReducer = combineReducers({
-  data
+  reducers_timelines
 })
 
 export default rootReducer

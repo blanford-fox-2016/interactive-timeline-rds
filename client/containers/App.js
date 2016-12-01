@@ -8,17 +8,18 @@ import FormAddTimeline from '../components/FormAddTimeline'
 
 class App extends Component {
   componentDidMount(){
-    this.props.actions.loadTimelines() // dipanggil
+    this.props.actions.loadTimelines()
   }
   render() {
-      const {data, actions} = this.props
+      const {data_timelines, actions} = this.props
+
       return (
           <div>
-              <Navbar/>
+              <Navbar />
               <div className="container">
                   <FormAddTimeline onSave={actions.addTimeline}/>
                   <hr />
-                  <ListTimelines data={data} actions={actions}/>
+                  <ListTimelines data_timelines={data_timelines} actions={actions} />
               </div>
           </div>
       )
@@ -26,12 +27,14 @@ class App extends Component {
 }
 
 App.propTypes = {
-    data: PropTypes.array.isRequired,
+    data_timelines: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired
 }
 
 function mapStateToProps(state) {
-    return {data: state.data} // state.data berhubungan ke index reducers
+    return {
+      data_timelines: state.reducers_timelines
+    }
 }
 
 function mapDispatchToProps(dispatch) {

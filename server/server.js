@@ -1,9 +1,11 @@
 const express = require('express');
 const path = require('path');
+const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express()
 
+app.use(morgan())
 app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
@@ -18,7 +20,13 @@ app.get('/api/timelines', (req, res) => {
   Timelines.findAll({
     include: [{
       model: Users
-    }]
+    },{
+      model: Comments,
+      include: {
+        model: Users
+      }
+    }],
+    order: '"id" DESC, "Comments.id" ASC'
   })
   .then((all_data, err) => {
       if(err){
@@ -66,9 +74,14 @@ app.post('/api/timelines', (req, res) => {
         where: {
           id: new_data.id
         },
-        include: {
+        include: [{
           model: Users
-        }
+        },{
+          model: Comments,
+          include: {
+            model: Users
+          }
+        }]
       }).then((timeline, err) => {
         console.log(timeline.id);
         if(err){
@@ -110,6 +123,78 @@ app.delete('/api/timelines/:id', (req, res) => {
       console.error(err);
     }else{
       res.json(deleted_data)
+    }
+  })
+})
+
+// get all comments in a timeline
+app.get('/api/comments', (req, res) => {
+  Comments.findAll({
+    // where: {
+    //   id: req.params.timelineId
+    // },
+    // include: [{
+    //   model: Comments
+    // },
+    include: [{
+      model: Users
+    }],
+    order: '"id" ASC'
+  }).then((comment, err) => {
+    if(err){
+      console.log(err);
+    }else{
+      res.json(comment);
+      // timeline.getComments({
+      //   include: {
+      //     model: Users
+      //   }
+      // }).then((comment, err) => {
+      //   let result = []
+      //   for (var i = 0; i < comment.length; i++) {
+      //     result.push(comment[i].dataValues);
+      //   };
+      //
+      //   res.json(result);
+      // })
+    }
+  })
+})
+
+// create new comment in a timeline
+app.post('/api/timelines/:timelineId/comments', (req, res) => {
+  Timelines.findOne({
+    where: {
+      id : req.params.timelineId
+    }
+  }).then((timeline, err) => {
+    if(err){
+      console.log(err);
+    }else{
+      Comments.create({
+        content: req.body.content,
+        TimelineId: timeline.id,
+        UserId: 1
+      }).then((comment, err) => {
+        if(err){
+          console.log(err);
+        }else{
+          Comments.findOne({
+            where: {
+              id: comment.id
+            },include: {
+              model: Users
+            }
+          }).then((err, comment_user) => {
+              if(err){
+                console.log(err);
+                res.json(err)
+              }else{
+                res.json(comment_user)
+              }
+          })
+        }
+      })
     }
   })
 })

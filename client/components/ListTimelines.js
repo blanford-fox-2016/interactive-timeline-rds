@@ -5,12 +5,14 @@ export default class ListTimelines extends Component {
     constructor(props) {
         super(props)
     }
-    render() {
-        const {data, actions} = this.props
 
-        let dataNodes = data.map(function(item) {
-            return (<DataTimeline key={item.id} data={item} {...actions}/>)
+    render() {
+        const { data_timelines, actions } = this.props
+        // console.log(data_timelines);
+        let dataNodes = data_timelines.map(function(item) {
+            return (<DataTimeline key={item.id} data_timelines={item} {...actions}/>)
         })
+
         return (
           <div>
             <div>
@@ -23,6 +25,6 @@ export default class ListTimelines extends Component {
 }
 
 ListTimelines.propTypes = {
-    data: PropTypes.array.isRequired,
+    data_timelines: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired
 }

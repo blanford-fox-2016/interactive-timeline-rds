@@ -1,26 +1,31 @@
 import React, {Component, PropTypes} from 'react'
+import FromAddComment from './FromAddComment'
+import ListCommentsByTimeline from './ListCommentsByTimeline'
 
 class DataTimeline extends Component {
   constructor(props) {
     super(props)
     this.state = {
       editing: false,
-      content: this.props.data.content || ''
+      content: this.props.data_timelines.content || ''
     }
   }
+
   handleContentChange(e) {
     this.setState({content: e.target.value})
   }
+
   handleEditClick(){
     this.setState({editing: true})
   }
+
   handleSaveEdit(e) {
     e.preventDefault()
     let content = this.state.content.trim()
     if (!content) {
-      return ;
+      return
     } else {
-      this.props.editTimeline(this.props.data.id, content)
+      this.props.editTimeline(this.props.data_timelines.id, content)
       this.setState({editing: false})
     }
   }
@@ -32,7 +37,7 @@ class DataTimeline extends Component {
   }
 
   render() {
-    const {data, deleteTimeline, editData} = this.props
+    const {data_timelines, deleteTimeline, editTimeline, addComment } = this.props
     if (this.state.editing) {
       return (
         <div>
@@ -46,23 +51,25 @@ class DataTimeline extends Component {
       )
     } else {
       return (
-        <div className="panel panel-default">
-          <div className="panel-body">
-            <span>
-              <h3>{data.User.username + " - " + data.User.email}</h3>
-              {data.content}
-            </span>
+        <div>
+          <div className="panel panel-default">
+            <div className="panel-body">
+              <button className="btn btn-danger btn-sm pull-right" type="button" onClick={()=> confirm('Are you sure want to delete this contact ?') ? deleteTimeline(data_timelines.id) : ''}>
+                <span className="glyphicon glyphicon-trash"></span>
+                Delete
+              </button>
+              <button className="btn btn-success btn-sm pull-right" type="button" onClick={() => this.handleEditClick(data_timelines.id)}>
+                <span className="glyphicon glyphicon-edit"></span>
+                Edit
+              </button>
+              <span>
+                <h3>{data_timelines.User.username + " - " + data_timelines.User.email}</h3>
+                {data_timelines.content}
+              </span>
+            </div>
+              <ListCommentsByTimeline data_timelines={data_timelines}  />
           </div>
-          <div className="panel-footer">
-            <button className="btn btn-success btn-sm" type="button" onClick={() => this.handleEditClick(data.id)}>
-              <span className="glyphicon glyphicon-edit"></span>
-              Edit
-            </button>
-            <button className="btn btn-danger btn-sm" type="button" onClick={()=> confirm('Are you sure want to delete this contact ?') ? deleteTimeline(data.id) : ''}>
-              <span className="glyphicon glyphicon-trash"></span>
-              Delete
-            </button>
-          </div>
+            <FromAddComment data_timelines={data_timelines} onCommentSubmit={addComment} />
         </div>
       )
     }
@@ -70,9 +77,10 @@ class DataTimeline extends Component {
 }
 
 DataTimeline.propTypes = {
-  data: PropTypes.object.isRequired,
-  deleteData: PropTypes.func.isRequired,
-  editData: PropTypes.func.isRequired
+  data_timelines: PropTypes.object.isRequired,
+  deleteTimeline: PropTypes.func.isRequired,
+  editTimeline: PropTypes.func.isRequired,
+  addComment: PropTypes.func.isRequired
 }
 
 export default DataTimeline

@@ -4,11 +4,57 @@ import request from 'superagent'
 const TIMELINES_URL = 'http://localhost:3000/api/timelines/'
 
 // --------------------------------
+// add comments
+// --------------------------------
+export function addStateComment(timelineId, content, User){
+  return {type: types.ADD_COMMENT, timelineId, content, User}
+}
+
+export function addCommentsSuccess(comment){
+  return {type: types.ADD_COMMENTS_SUCCESS, comment}
+}
+
+export function addCommentsFailure(){
+  return {type: types.ADD_COMMENTS_FAILURE}
+}
+
+export function addComment(timelineId, content){
+  var User = {
+    username: '',
+    email: '',
+    Comments: {
+      User: {
+        username: '',
+        email: ''
+      }
+    }
+  }
+  return dispatch => {
+    dispatch(addStateComment(timelineId, content, User))
+    return request
+          .post(TIMELINES_URL+timelineId+"/comments")
+          .set('Accept', 'application/json')
+          .type('form')
+          .send({
+            content: content
+          })
+          .end((err, res) => {
+            if(err){
+              console.error(err);
+              dispatch(addCommentsFailure())
+            }else{
+              dispatch(addCommentsSuccess(res.body))
+            }
+          })
+  }
+}
+
+// --------------------------------
 // addData
 // --------------------------------
 
-export function addData(content, User){
-  return {type: types.ADD_TIMELINE, content, User}
+export function addData(User, content){
+  return {type: types.ADD_TIMELINE, User, content}
 }
 
 export function addTimelineFailure(){
@@ -27,8 +73,9 @@ export function addTimeline(content){
     username: '',
     email: ''
   }
+
   return dispatch => {
-    dispatch(addData(content, User))
+    dispatch(addData(User, content))
     return request
           .post(TIMELINES_URL)
           .set('Accept', 'application/json')
@@ -92,7 +139,6 @@ export function deleteData(id){
   return {type: types.DELETE_TIMELINE, id}
 }
 
-
 export function deleteTimelineFailure(){
   return {type: types.DELETE_TIMELINES_FAILURE}
 }
@@ -116,7 +162,6 @@ export function deleteTimeline(id){
           })
   }
 }
-
 
 // --------------------------------
 // loadData
