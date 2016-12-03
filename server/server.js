@@ -3,17 +3,135 @@ const path = require('path');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const session = require('express-session')
 const app = express()
+
+// JSON Web Tokens
+const jwt = require('jsonwebtoken')
+
+// Authentication
+const passport = require('passport')
+const LocalStrategy = require('passport-local').Strategy
+
+const models = require ('./models')
+const Users = models.Users
+const Timelines = models.Timelines
+const Comments = models.Comments
 
 app.use(morgan())
 app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 
-const models = require ('./models')
-const Users = models.Users
-const Timelines = models.Timelines
-const Comments = models.Comments
+app.use(session({ secret: 'secret' }));
+app.use(passport.initialize());
+app.use(passport.session());
+
+// passport.use(Users.createStrategy());
+passport.use(new LocalStrategy(Users.authenticate()))
+passport.serializeUser(Users.serializeUser());
+passport.deserializeUser(Users.deserializeUser());
+
+// register user
+app.post('/api/users/signup', (req, res, next) => {
+  // Users.create({
+  //   username: req.body.username,
+  //   password: req.body.password,
+  //   email: req.body.email,
+  //   photo_URL: req.body.photo_URL
+  // }).then((user) => {
+  //     var user_token = {
+  //       sub: user.id,
+  //       username: user.username,
+  //       email: user.email,
+  //       photo_URL: user.photo_URL
+  //     }
+  //
+  //     var token = jwt.sign(user_token, 'secret', { expiresIn: 60 * 60 })
+  //
+  //     res.status(200).json({
+  //       token: token
+  //     })
+  //   })
+  //   .catch((err) => {
+  //     console.log(`error`);
+  //     res.satatus(400).json(err)
+  //   })
+  Users.register({
+    username: req.body.username,
+    email: req.body.email,
+    photo_URL: req.body.photo_URL
+  },req.body.password, (err, new_user) => {
+    if(err){
+      console.log(err);
+      res.status(400).json(err)
+    }else {
+      console.log(new_user);
+      passport.authenticate('local', {}, (err, user, info) => {
+        if(err){
+          return res.status(400).json(err)
+        }else{
+          return res.status(200).json({
+            token: jwt.sign({
+              sub: user._id,
+              username: user.username,
+              email: user.email,
+              photo_URL: user.photo_URL
+            }, 'secret', { expiresIn: 60*60 })
+          })
+        }
+      })(req, res, next)
+    }
+  })
+})
+
+// login user
+app.post('/api/users/login', (req, res, next) => {
+  // Users.findOne({
+  //   where: {
+  //     username: req.body.username,
+  //     password: req.body.password
+  //   }
+  // }).then((login_user) => {
+  //     console.log(login_user);
+  //     if (!login_user) return res.status(400).json('No User Found')
+  //     else{
+  //       var user_token = {
+  //         sub: login_user.id,
+  //         username: login_user.username,
+  //         email: login_user.email,
+  //         photo_URL: login_user.photo_URL
+  //       }
+  //
+  //       var token = jwt.sign(user_token, 'secret', { expiresIn: 60 * 60 })
+  //
+  //       res.status(200).json({
+  //         token: token
+  //       })
+  //     }
+  //   })
+  //   .catch((err) => {
+  //     res.status(400).json(err)
+  //   })
+  passport.authenticate('local', {}, (err, user, info) => {
+    if(err){
+      return res.status(400).json(err)
+    }else{
+      if(user != false){
+        return res.status(200).json({
+          token: jwt.sign({
+            sub: user._id,
+            username: user.username,
+            email: user.email,
+            photo_URL: user.photo_URL
+          }, 'secret', { expiresIn: 60*60 })
+        })
+      }else{
+        return res.status(400).json(info)
+      }
+    }
+  })(req, res, next)
+})
 
 // get all timelines
 app.get('/api/timelines', (req, res) => {
