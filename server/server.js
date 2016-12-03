@@ -185,7 +185,7 @@ app.post('/api/timelines/:timelineId/comments', (req, res) => {
             },include: {
               model: Users
             }
-          }).then((err, comment_user) => {
+          }).then((comment_user, err) => {
               if(err){
                 console.log(err);
                 res.json(err)

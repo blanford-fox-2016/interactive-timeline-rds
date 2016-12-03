@@ -11,20 +11,24 @@ class App extends Component {
     this.props.actions.loadTimelines()
   }
   render() {
-      const {data_timelines, actions} = this.props
+      const { data_timelines, children, actions } = this.props
 
       return (
           <div>
               <Navbar />
-              <div className="container">
-                  <FormAddTimeline onSave={actions.addTimeline}/>
-                  <hr />
-                  <ListTimelines data_timelines={data_timelines} actions={actions} />
-              </div>
+              {children}
           </div>
       )
   }
 }
+/*
+
+<div className="container">
+    <FormAddTimeline onSave={actions.addTimeline}/>
+    <hr />
+    <ListTimelines data_timelines={data_timelines} actions={actions} />
+</div>
+*/
 
 App.propTypes = {
     data_timelines: PropTypes.array.isRequired,

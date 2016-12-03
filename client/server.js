@@ -15,6 +15,11 @@ app.use(webpackHotMiddleware(compiler))
 
 app.use('/', express.static(path.join(__dirname, 'public')));
 
+app.get('*', function (request, response){
+  response.sendFile(path.resolve(__dirname, 'public', 'index.html'))
+})
+
+
 app.listen(port, function(error){
   if(error){
     console.error(error)
