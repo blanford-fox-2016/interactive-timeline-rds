@@ -83,7 +83,7 @@ app.post('/api/timelines', (req, res) => {
           }
         }]
       }).then((timeline, err) => {
-        console.log(timeline.id);
+        // console.log(timeline.id);
         if(err){
           console.error(err);
         }else{
