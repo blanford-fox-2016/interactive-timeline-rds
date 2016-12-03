@@ -2,6 +2,66 @@ import * as types from '../constants/ActionTypes'
 import request from 'superagent'
 
 const TIMELINES_URL = 'http://localhost:3000/api/timelines/'
+const USERS_URL = 'http://localhost:3000/api/users/'
+
+
+// --------------------------------
+// login
+// --------------------------------
+export function onLoginSuccess(login_user){
+  return {type: types.LOGIN_USERS_SUCCESS, login_user}
+}
+
+export function onLoginFailure(){
+  return {type: types.LOGIN_USERS_FAILURE}
+}
+
+export function onLogin(data_login){
+  return dispatch => {
+    return request
+          .post(USERS_URL+'login')
+          .set('Accept', 'application/json')
+          .type('form')
+          .send(data_login)
+          .end((err, res) => {
+            if(err){
+              console.error(err);
+              dispatch(onSignUpFailure())
+            }else{
+              dispatch(onLoginSuccess(res.body))
+            }
+          })
+  }
+}
+
+// --------------------------------
+// register a user
+// --------------------------------
+export function onSignUpSuccess(new_user){
+  return {type: types.ADD_USERS_SUCCESS, new_user}
+}
+
+export function onSignUpFailure(){
+  return {type: types.ADD_USERS_FAILURE}
+}
+
+export function onSignUp(data_regis){
+  return dispatch => {
+    return request
+          .post(USERS_URL+'signup')
+          .set('Accept', 'application/json')
+          .type('form')
+          .send(data_regis)
+          .end((err, res) => {
+            if(err){
+              console.error(err);
+              dispatch(onSignUpFailure())
+            }else{
+              dispatch(onSignUpSuccess(res.body))
+            }
+          })
+  }
+}
 
 // --------------------------------
 // add comments

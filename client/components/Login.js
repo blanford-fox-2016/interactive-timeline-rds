@@ -1,14 +1,25 @@
-import React, { Component } from 'react'
-// import { connect } from 'react-redux'
+import React, { Component, PropTypes } from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import * as AppActions from '../actions'
+import { Auth } from '../public/js/Auth'
 
-export default class Login extends Component {
-  constructor(){
-    super()
+class Login extends Component {
+  constructor(props){
+    super(props)
     this.state = {
       error: false,
       username: '',
       password: ''
     }
+  }
+
+  componentDidMount(){
+    !Auth.getToken()
+    ?
+    this.props.router.replace('/login')
+    :
+    this.props.router.replace('/dashboard')
   }
 
   handleUsername(e){
@@ -30,37 +41,16 @@ export default class Login extends Component {
       password: this.state.password.trim()
     }
 
-    // if(!data_login.username || !data_login.password){
-    //   return
-    // }else{
-    //   $.post({
-    //     url: "http://localhost:3000/api/users/login",
-    //     data: data_login,
-    //     success: function(login_user){
-    //       localStorage.setItem('token', login_user.token)
-    //       // this.setState({
-    //       //   token: login_user.token
-    //       // })
-    //       if(getUser().username){
-    //         this.props.router.replace('/dashboard')
-    //       }else{
-    //         alert('input is wrong')
-    //         this.setState({
-    //           username: '',
-    //           password: '',
-    //           error: true,
-    //           token: ''
-    //         })
-    //         this.props.router.replace('/login')
-    //       }
-    //     }.bind(this)
-    //   })
-
+    if(!data_login.username || !data_login.password){
+      return
+    }else{
+      this.props.actions.onLogin(data_login)
+      this.props.router.replace('/dashboard')
       this.setState({
         username: '',
         password: ''
       })
-    // }
+    }
   }
 
   render(){
@@ -89,4 +79,15 @@ export default class Login extends Component {
   }
 }
 
-// export default connect(Home)
+
+Login.propTypes = {
+    actions: PropTypes.object.isRequired
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+      actions: bindActionCreators(AppActions, dispatch)// penghubung reducers ke actions
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Login)

@@ -15,7 +15,11 @@ import {ADD_TIMELINE,
         LOAD_COMMENTS_FAILURE,
         ADD_COMMENT,
         ADD_COMMENTS_SUCCESS,
-        ADD_COMMENTS_FAILURE}
+        ADD_COMMENTS_FAILURE,
+        ADD_USERS_SUCCESS,
+        ADD_USERS_FAILURE,
+        LOGIN_USERS_SUCCESS,
+        LOGIN_USERS_FAILURE}
         from '../constants/ActionTypes'
 
 const initialState = []
@@ -23,6 +27,13 @@ let index = 0
 
 export default function data(state = initialState, action){
   switch (action.type) {
+    case LOGIN_USERS_SUCCESS:
+      localStorage.setItem('token', action.login_user.token)
+      return state
+
+    case ADD_USERS_SUCCESS:
+      return state
+
     case ADD_COMMENT:
       // ini buat comment yang dipisah
       // id, User temporary
@@ -133,6 +144,8 @@ export default function data(state = initialState, action){
       return index === -1 ? state : state.filter(data => data.id !== action.id)
 
     default:
+    case LOGIN_USERS_FAILURE:
+    case ADD_USERS_FAILURE:
     case ADD_COMMENTS_FAILURE:
     case DELETE_TIMELINES_FAILURE:
     case EDIT_TIMELINES_FAILURE:

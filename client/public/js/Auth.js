@@ -1,3 +1,5 @@
+import jwt_decode from 'jwt-decode'
+
 export const Auth = {
     authenticateUser: (data) => {
         console.log(data)

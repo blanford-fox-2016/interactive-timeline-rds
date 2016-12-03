@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
+import { Auth } from '../public/js/Auth'
 
 class Navbar extends Component {
     constructor(props) {
@@ -8,6 +9,7 @@ class Navbar extends Component {
         searchInput: this.props.searchInput || ''
       }
     }
+    
     render() {
         return (
             <nav className="navbar navbar-inverse navbar-static-top">
@@ -19,14 +21,26 @@ class Navbar extends Component {
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>
                         </button>
-                        <a className="navbar-brand" href="/">Timeline</a>
+                        {Auth.getToken()
+                          ?
+                            <Link to="/dashboard" className="navbar-brand">Dashboard</Link>
+                          :
+                            <Link to="/" className="navbar-brand">Timeline</Link>
+                        }
                     </div>
                     <div id="navbar" className="navbar-collapse collapse">
-                        <ul className="nav navbar-nav">
-                          <li><Link to="/">Home</Link></li>
-                          <li><Link to="/login">Login</Link></li>
-                          <li><Link to="/signup">Sign Up</Link></li>
-                        </ul>
+                        {Auth.getToken()
+                          ?
+                            <ul className="nav navbar-nav">
+                              <li><Link to="/logout">Logout</Link></li>
+                            </ul>
+                          :
+                            <ul className="nav navbar-nav">
+                              <li><Link to="/">Home</Link></li>
+                              <li><Link to="/login">Login</Link></li>
+                              <li><Link to="/signup">Sign Up</Link></li>
+                            </ul>
+                        }
                     </div>
                 </div>
             </nav>

@@ -1,14 +1,26 @@
-import React, { Component } from 'react'
-// import { connect } from 'react-redux'
+import React, { Component, PropTypes } from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import * as AppActions from '../actions'
+import { Auth } from '../public/js/Auth'
 
-export default class SignUp extends Component {
-  constructor(){
-    super()
+class SignUp extends Component {
+  constructor(props){
+    super(props)
     this.state = {
       username: '',
       password: '',
-      email: ''
+      email: '',
+      photo_URL: ''
     }
+  }
+
+  componentDidMount(){
+    !Auth.getToken()
+    ?
+    this.props.router.replace('/signup')
+    :
+    this.props.router.replace('/dashboard')
   }
 
   handleUsername(e){
@@ -29,32 +41,33 @@ export default class SignUp extends Component {
     })
   }
 
+  handlePhoto_URL(e){
+    this.setState({
+      photo_URL: e.target.value
+    })
+  }
+
   handleSubmitRegister(e){
     e.preventDefault()
     var data_regis = {
       username: this.state.username.trim(),
       password: this.state.password.trim(),
-      email: this.state.email.trim()
+      email: this.state.email.trim(),
+      photo_URL: this.state.photo_URL.trim()
     }
 
-    if(!data_regis.username || !data_regis.password || !data_regis.email){
+    if(!data_regis.username || !data_regis.password || !data_regis.email || !data_regis.photo_URL){
+
       return
     }else{
-      // $.post({
-      //   url: "http://localhost:3000/api/users/",
-      //   data: data_regis,
-      //   success: function(new_user){
-      //     localStorage.setItem('token', new_user.token)
-      //
-      //     if(getUser().username){
-      //       this.props.router.replace('/dashboard')
-      //     }
-      //   }.bind(this)
-      // })
+      this.props.router.replace('/')
+      this.props.actions.onSignUp(data_regis)
 
       this.setState({
         username: '',
-        password: ''
+        password: '',
+        email: '',
+        photo_URL: ''
       })
     }
   }
@@ -81,6 +94,10 @@ export default class SignUp extends Component {
                 <input type="text" className="form-control" id="email" onChange={this.handleEmail.bind(this)} />
               </div>
               <div className="form-group">
+                <label htmlFor="photo_URL">Photo URL</label>
+                <input type="text" className="form-control" id="photo_URL" onChange={this.handlePhoto_URL.bind(this)} />
+              </div>
+              <div className="form-group">
                 <button type="submit" id="btn_register" className="btn btn-lg btn-success">Register</button>
               </div>
             </form>
@@ -90,4 +107,14 @@ export default class SignUp extends Component {
   }
 }
 
-// export default connect()(SignUp)
+SignUp.propTypes = {
+    actions: PropTypes.object.isRequired
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+      actions: bindActionCreators(AppActions, dispatch)// penghubung reducers ke actions
+  }
+}
+
+export default connect(null, mapDispatchToProps)(SignUp)

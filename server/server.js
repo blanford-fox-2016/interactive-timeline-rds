@@ -18,6 +18,9 @@ const Users = models.Users
 const Timelines = models.Timelines
 const Comments = models.Comments
 
+var nodemailer = require('nodemailer');
+
+
 app.use(morgan())
 app.use(cors())
 app.use(bodyParser.json())
@@ -57,32 +60,70 @@ app.post('/api/users/signup', (req, res, next) => {
   //     console.log(`error`);
   //     res.satatus(400).json(err)
   //   })
-  Users.register({
-    username: req.body.username,
-    email: req.body.email,
-    photo_URL: req.body.photo_URL
-  },req.body.password, (err, new_user) => {
-    if(err){
-      console.log(err);
-      res.status(400).json(err)
-    }else {
-      console.log(new_user);
-      passport.authenticate('local', {}, (err, user, info) => {
+  var token = jwt.sign({
+                username: req.body.username,
+                email: req.body.email,
+                photo_URL: req.body.photo_URL
+              }, 'secret', { expiresIn: 5 })
+
+  // create reusable transporter object using the default SMTP transport
+  // var transporter = nodemailer.createTransport('smtps://user%40gmail.com:pass@smtp.gmail.com');
+  var transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+        user: 'kendui94@gmail.com',
+        pass: 'efnkquozwbytjxel'
+    },
+    logger: true, // log to console
+    debug: true // include SMTP traffic in the logs
+  });
+  // console.log(token);
+  // setup e-mail data with unicode symbols
+  var mailOptions = {
+      from: '"Ken Duigraha Putra ?" <kenduigraha@yahoo.com>', // sender address
+      to: `${req.body.email}`, // list of receivers
+      subject: 'Verify Register', // Subject line
+      text: 'Please click this link to verify your email', // plaintext body
+      html: `<a href="http://localhost:3000/api/users/${token}" alt="_target">click this link</a>` // html body
+  };
+
+  // send mail with defined transport object
+  transporter.sendMail(mailOptions, function(error, info){
+      if(error){
+          console.log(error);
+          return res.json(error)
+      }
+      console.log('Message sent: ' + info.response);
+
+      Users.register({
+        username: req.body.username,
+        email: req.body.email,
+        photo_URL: req.body.photo_URL
+      },req.body.password, (err, new_user) => {
         if(err){
-          return res.status(400).json(err)
-        }else{
-          return res.status(200).json({
-            token: jwt.sign({
-              sub: user._id,
-              username: user.username,
-              email: user.email,
-              photo_URL: user.photo_URL
-            }, 'secret', { expiresIn: 60*60 })
-          })
+          console.log(err);
+          res.status(400).json(err)
+        }else {
+          // console.log(new_user.dataValues);
+          res.json(new_user)
+
+          // passport.authenticate('local', {}, (err, user, info) => {
+          //   if(err){
+          //     return res.status(400).json(err)
+          //   }else{
+          //     return res.status(200).json({
+          //       token: jwt.sign({
+          //         sub: user.id,
+          //         username: user.username,
+          //         email: user.email,
+          //         photo_URL: user.photo_URL
+          //       }, 'secret', { expiresIn: 60*60 })
+          //     })
+          //   }
+          // })(req, res, next)
         }
-      })(req, res, next)
-    }
-  })
+      })
+  });
 })
 
 // login user

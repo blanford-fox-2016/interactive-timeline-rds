@@ -37,7 +37,8 @@ class DataTimeline extends Component {
   }
 
   render() {
-    const {data_timelines, deleteTimeline, editTimeline, addComment } = this.props
+    const { data_timelines, deleteTimeline, editTimeline, addComment } = this.props
+    
     if (this.state.editing) {
       return (
         <div>
