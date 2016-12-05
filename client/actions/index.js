@@ -82,7 +82,7 @@ export function addCommentsFailure(){
   return {type: types.ADD_COMMENTS_FAILURE}
 }
 
-export function addComment(timelineId, content){
+export function addComment(timelineId, content, data_user){
   var User = {
     username: '',
     email: '',
@@ -100,7 +100,8 @@ export function addComment(timelineId, content){
           .set('Accept', 'application/json')
           .type('form')
           .send({
-            content: content
+            content: content,
+            data_user: data_user
           })
           .end((err, res) => {
             if(err){
@@ -129,7 +130,7 @@ export function addTimelineSuccess(timeline){
   return {type: types.ADD_TIMELINES_SUCCESS, timeline}
 }
 
-export function addTimeline(content){
+export function addTimeline(content, data_user){
   //temporary id khusus kalau pake id date now dari awal
   // var id = Date.now().toString()
   //temporary user
@@ -145,7 +146,8 @@ export function addTimeline(content){
           .set('Accept', 'application/json')
           .type('form')
           .send({
-            content: content
+            content: content,
+            data_user: data_user
           })
           .end((err, res) => {
             if(err){

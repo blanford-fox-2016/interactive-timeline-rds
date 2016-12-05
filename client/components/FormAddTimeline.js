@@ -19,10 +19,12 @@ export default class FormAddTimeline extends Component {
     if (!content) {
       return ;
     } else {
-      this.props.onSave(content)
+      // console.log(this.props.data_user);
+      this.props.onSave(content, this.props.data_user)
       this.setState({content: ''})
     }
   }
+
   render() {
     return (
       <form onSubmit={this.handleSubmit.bind(this)}>

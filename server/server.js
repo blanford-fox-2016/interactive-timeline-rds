@@ -159,9 +159,10 @@ app.post('/api/users/login', (req, res, next) => {
       return res.status(400).json(err)
     }else{
       if(user != false){
+        console.log(user);
         return res.status(200).json({
           token: jwt.sign({
-            sub: user._id,
+            sub: user.id,
             username: user.username,
             email: user.email,
             photo_URL: user.photo_URL
@@ -222,7 +223,7 @@ app.get('/api/timelines/:id', (req, res) => {
 //create new timeline
 app.post('/api/timelines', (req, res) => {
   Timelines.create({
-    UserId: 1, //default nanti sesuati user login
+    UserId: req.body.data_user.sub,
     content: req.body.content
   }).then((new_data, err) => {
     // console.log(new_data.id);
@@ -333,7 +334,7 @@ app.post('/api/timelines/:timelineId/comments', (req, res) => {
       Comments.create({
         content: req.body.content,
         TimelineId: timeline.id,
-        UserId: 1
+        UserId: req.body.data_user.sub
       }).then((comment, err) => {
         if(err){
           console.log(err);

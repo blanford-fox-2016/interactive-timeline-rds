@@ -7,18 +7,21 @@ export default class FromAddComment extends Component {
       comment: ''
     }
   }
+
   handleCommentChange(e){
     this.setState({
       comment: e.target.value
     })
   }
+
   handleSubmitComment(e){
     e.preventDefault()
     let comment = this.state.comment.trim()
     if(!comment){
       return
     }else{
-      this.props.onCommentSubmit(this.props.data_timelines.id, comment)
+      // console.log(this.props.data_user);
+      this.props.onCommentSubmit(this.props.data_timelines.id, comment, this.props.data_user)
       this.setState({
         comment: ''
       })

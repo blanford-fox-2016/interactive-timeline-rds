@@ -17,21 +17,6 @@ const store  = configureStore()
 
 const history = syncHistoryWithStore(browserHistory, store)
 
-let checkAuthDashboard = (nextState, replace) => {
-  console.log(Auth.getToken());
-  // !Auth.getToken()
-  // ?
-  // replace({
-  //   pathname: '/login',
-  //   // state: { nextPathname: nextState.location.pathname }
-  // })
-  // :
-  // Auth.deauthenticateUser()
-  //   replace({
-  //     pathname: '/dashboard',
-  //     // state: { nextPathname: nextState.location.pathname }
-  //   })
-}
 
 render(
   <Provider store={store}>
@@ -40,7 +25,7 @@ render(
         <IndexRoute component={Home} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={SignUp} />
-        <Route path="/dashboard" component={Dashboard} onEnter={checkAuthDashboard} />
+        <Route path="/dashboard" component={Dashboard} />
         <Route path="/logout" onEnter={Logout} />
       </Route>
     </Router>

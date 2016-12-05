@@ -115,6 +115,7 @@ export default function data(state = initialState, action){
 
       if(index > -1 || timelines[0]){
         let newData = timelines.filter((data) => {return data.status != "temp"})
+        console.log([action.timeline, ...newData]);
         return [action.timeline, ...newData]
       }else{
         return [action.timeline, ...state]

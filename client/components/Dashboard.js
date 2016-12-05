@@ -21,11 +21,11 @@ class App extends Component {
 
   render() {
       const { data_timelines, children, actions } = this.props
-
+      
       return (
           <div>
             <div className="container">
-                <FormAddTimeline onSave={actions.addTimeline}/>
+                <FormAddTimeline data_user={Auth.getUser()} onSave={actions.addTimeline} />
                 <hr />
                 <ListTimelines data_timelines={data_timelines} actions={actions} />
             </div>
