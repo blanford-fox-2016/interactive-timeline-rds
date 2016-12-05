@@ -11,20 +11,37 @@ import Dashboard from './components/Dashboard'
 import configureStore from './store'
 import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
+import { Auth } from './public/js/Auth'
 
 const store  = configureStore()
 
 const history = syncHistoryWithStore(browserHistory, store)
+
+let checkAuthDashboard = (nextState, replace) => {
+  console.log(Auth.getToken());
+  // !Auth.getToken()
+  // ?
+  // replace({
+  //   pathname: '/login',
+  //   // state: { nextPathname: nextState.location.pathname }
+  // })
+  // :
+  // Auth.deauthenticateUser()
+  //   replace({
+  //     pathname: '/dashboard',
+  //     // state: { nextPathname: nextState.location.pathname }
+  //   })
+}
 
 render(
   <Provider store={store}>
     <Router history={history}>
       <Route path="/" component={App}>
         <IndexRoute component={Home} />
-        <Route path="/login" component={Login}/>
-        <Route path="/signup" component={SignUp}/>
-        <Route path="/dashboard" component={Dashboard}/>
-        <Route path="/logout" onEnter={Logout}/>
+        <Route path="/login" component={Login} />
+        <Route path="/signup" component={SignUp} />
+        <Route path="/dashboard" component={Dashboard} onEnter={checkAuthDashboard} />
+        <Route path="/logout" onEnter={Logout} />
       </Route>
     </Router>
   </Provider>,

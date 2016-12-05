@@ -28,8 +28,9 @@ let index = 0
 export default function data(state = initialState, action){
   switch (action.type) {
     case LOGIN_USERS_SUCCESS:
-      localStorage.setItem('token', action.login_user.token)
-      action.props.router.replace('dashboard')
+      // localStorage.setItem('token', action.login_user.token)
+      // action.props.router.replace('dashboard')
+      // action.callback()
       return state
 
     case ADD_USERS_SUCCESS:

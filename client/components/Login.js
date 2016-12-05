@@ -44,8 +44,17 @@ class Login extends Component {
     if(!data_login.username || !data_login.password){
       return
     }else{
-      this.props.actions.onLogin(data_login, this.props)
+
       // this.props.router.replace('/dashboard')
+      // this.props.actions.onLogin(data_login, callback => {
+      //   // console.log(Auth.getToken());
+      //   // console.log(this);
+      //   this.props.router.replace('/dashboard')
+      //   // this.props.location.pathname = '/dashboard'
+      //   // this.props.router.push('/dashboard')
+      // })
+      this.props.actions.onLogin(data_login, this.props.router)
+
       this.setState({
         username: '',
         password: ''

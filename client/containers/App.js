@@ -7,9 +7,9 @@ import Navbar from '../components/Navbar'
 import FormAddTimeline from '../components/FormAddTimeline'
 
 class App extends Component {
-  componentDidMount(){
-    this.props.actions.loadTimelines()
-  }
+  // componentDidMount(){
+  //   this.props.actions.loadTimelines()
+  // }
   render() {
       const { data_timelines, children, actions } = this.props
 
