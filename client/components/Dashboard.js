@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+ import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as AppActions from '../actions'
@@ -16,7 +16,6 @@ class App extends Component {
     ?
     this.props.actions.loadTimelines()
     :
-    console.log(this.props.router);
     this.props.router.replace('/login')
   }
 

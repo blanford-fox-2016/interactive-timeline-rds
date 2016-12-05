@@ -8,15 +8,15 @@ const USERS_URL = 'http://localhost:3000/api/users/'
 // --------------------------------
 // login
 // --------------------------------
-export function onLoginSuccess(login_user){
-  return {type: types.LOGIN_USERS_SUCCESS, login_user}
+export function onLoginSuccess(login_user, props){
+  return {type: types.LOGIN_USERS_SUCCESS, login_user, props}
 }
 
 export function onLoginFailure(){
   return {type: types.LOGIN_USERS_FAILURE}
 }
 
-export function onLogin(data_login){
+export function onLogin(data_login, props){
   return dispatch => {
     return request
           .post(USERS_URL+'login')
@@ -28,7 +28,7 @@ export function onLogin(data_login){
               console.error(err);
               dispatch(onSignUpFailure())
             }else{
-              dispatch(onLoginSuccess(res.body))
+              dispatch(onLoginSuccess(res.body, props))
             }
           })
   }
