@@ -6,11 +6,10 @@ export default class CommentList extends Component {
     super(props)
   }
   render(){
-    const {data} = this.props
-    let filteredData = data
+    const {data, editCommentProcess} = this.props
+    let filteredData = data.Comments
     let commentNodes = filteredData.map(function(item) {
-      console.log('item': item);
-        return (<Comment data={data}/>)
+        return (<Comment key={item.id} data={item} editCommentProcess={editCommentProcess} postData={data}/>)
     })
     return (
       <div className="well">

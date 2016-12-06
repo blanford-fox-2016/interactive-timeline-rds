@@ -39,7 +39,6 @@ export default function data(state = initialState, objFromUserAction) {
             return []
 
         case LOAD_POST_SUCCESS:
-        console.log('load post reducer :',objFromUserAction);
             return objFromUserAction.fromDatabase
 
         case ADD_POST:
@@ -52,6 +51,7 @@ export default function data(state = initialState, objFromUserAction) {
                       image_url: Auth.getUser().image_url,
                       name: Auth.getUser().name
                     },
+                    Comments: [],
                     fake: true
                 },
                 ...state
@@ -75,10 +75,99 @@ export default function data(state = initialState, objFromUserAction) {
                   objFromUserAction, ...newArray
                 ]
             }
+
+        case ADD_COMMENT:
+        // console.log("init state di add comment: ", state)
+        // console.log('obj user : ', objFromUserAction);
+            // console.log("init action: ", action)
+            const timelines = state.filter((data) => {
+                // console.log("ini data: ", data)
+                // console.log(data.id, "===", action.idtimeline,data.id === action.idtimeline)
+                return data.id === objFromUserAction.post.id
+            })
+
+            // console.log("isi timeline: ", timelines)
+            // console.log("isi timeline 0: ", timelines[0])
+            var arrTemp = {
+                    id: Date.now(),
+                    content: objFromUserAction.comment,
+                    User: objFromUserAction.user_comment,
+                    fake: true
+                }
+            // console.log('arrTemp : ', arrTemp);
+            timelines[0].Comments.push(arrTemp)
+
+            // console.log("isi timeline setelah push: ", timelines[0])
+            let dataTimeline = timelines[0]
+            return state.map((data) => {
+                return data.id === objFromUserAction.post.id ? Object.assign({}, dataTimeline) : data
+})
+
+          case ADD_COMMENT_SUCCESS:
+          console.log('comment success');
+          console.log('object action success: ', objFromUserAction);
+
+              let obj_id = state.map(function(obj) {
+                  return obj.id
+              }).indexOf(objFromUserAction.content.id)
+
+
+              if (obj_id > -1) {
+                  return state
+              } else {
+                  let newArray = state.filter((data)=> {
+                    return data.fake != true
+                  })
+                  console.log('add comment success obj : ', objFromUserAction);
+                  console.log('add comment success new : ', newArray);
+
+                  return [
+                    objFromUserAction, ...newArray
+                  ]
+              }
+
         case EDIT_POST:
             return state.map(cb_result => cb_result.id === objFromUserAction.id
                 ? Object.assign({}, cb_result, {content: objFromUserAction.content})
                 : cb_result)
+
+        case EDIT_COMMENT:
+        console.log('action obj : ', objFromUserAction);
+        console.log('state : ', state);
+        console.log("state di edit comment: ", state)
+            console.log("action di edit comment: ", objFromUserAction)
+
+            return state.map((comment) => {
+                console.log("ini di edit comment: ", comment)
+
+                if (comment.id === objFromUserAction.PostId) {
+                    console.log("masuk")
+                    // return comment.id === action.IdTimeline ? Object.assign({}, comment) : comment
+                    return Object.assign({}, comment)
+                }
+                else {
+                    return Object.assign({}, comment)
+                }
+})
+// return state.map((comment) => {
+//     if (comment.id === objFromUserAction.PostId) {
+//         comment.Comments.map((data) => {
+//           if (data.id === objFromUserAction.CommentId) {
+//             console.log("masuk")
+//             console.log('comment :', data);
+//             // Object.assign({}, data)//todo
+//             Object.assign({}, comment)
+//           } else {
+//
+//           }
+//         })
+//         // return comment.id === action.IdTimeline ? Object.assign({}, comment) : comment
+//
+//     }
+//     else {
+//         return Object.assign({}, comment)
+//     }
+// })
 
         case DELETE_POST:
             return state.filter(cb_result => cb_result.id !== objFromUserAction.id)

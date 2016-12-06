@@ -24,7 +24,7 @@ export default class DataItem extends Component {
       this.setState({commenting: true})
     }
     handleCommentChange(e) {
-      this.setState({comment: this.props.data.comment})
+      this.setState({comment: e.target.value})
     }
     submitComment(e) {
       e.preventDefault()
@@ -32,7 +32,7 @@ export default class DataItem extends Component {
       if(!comment) {
         return;
       } else {
-        this.props.commentProcess(this.props.data.id, Auth.getUser().id)
+        this.props.addCommentProcess(comment, this.props.data, Auth.getUser())
         this.setState({commenting: false})
       }
     }
@@ -47,7 +47,7 @@ export default class DataItem extends Component {
         }
     }
     render() {
-        const {data, deletePostProcess, editPost} = this.props
+        const {data, deletePostProcess, editPost, editCommentProcess} = this.props
         if (this.state.editing) {
             return (
                 <div className = "container"><div className = "qa-message-list" id = "wallmessages"> <div className="message-item" id="m16">
@@ -59,6 +59,7 @@ export default class DataItem extends Component {
                         </div>
                         <div className="user-detail">
                             <h5 className="handle">{data.User.name}</h5>
+                            <span className="text-muted pull-right">{moment(data.createdAt).fromNow()}</span>
                             <div className="post-meta">
                                 <div className="asker-meta">
                                     <span className="qa-message-what"></span>
@@ -110,6 +111,7 @@ export default class DataItem extends Component {
                       </div>
                       <div className="user-detail">
                         <h5 className="handle">{data.User.name}</h5>
+                        <span className="text-muted pull-right">{moment(data.createdAt).fromNow()}</span>
                           <div className="post-meta">
                             <div className="asker-meta">
                                 <span className="qa-message-what"></span>
@@ -158,6 +160,7 @@ export default class DataItem extends Component {
                         </div>
                         <div className="user-detail">
                             <h5 className="handle">{data.User.name}</h5>
+                            <span className="text-muted pull-right">{moment(data.createdAt).fromNow()}</span>
                             <div className="post-meta">
                                 <div className="asker-meta">
                                     <span className="qa-message-what"></span>
@@ -188,7 +191,7 @@ export default class DataItem extends Component {
                       <span className="glyphicon glyphicon-trash"></span>   Delete</button></span>
                           </span>
                         </div>
-                        {/* <CommentList data={data}/> */}
+                        <CommentList data={data} editCommentProcess={editCommentProcess}/>
                     </div>
                 </div>
             </div>
@@ -206,6 +209,7 @@ export default class DataItem extends Component {
                         </div>
                         <div className="user-detail">
                             <h5 className="handle">{data.User.name}</h5>
+                            <span className="text-muted pull-right">{moment(data.createdAt).fromNow()}</span>
                             <div className="post-meta">
                                 <div className="asker-meta">
                                     <span className="qa-message-what"></span>
@@ -231,7 +235,7 @@ export default class DataItem extends Component {
                           </span>
                           </span>
                         </div>
-                        {/* <CommentList data={data}/> */}
+                        <CommentList data={data} editCommentProcess={editCommentProcess}/>
                     </div>
                 </div>
             </div>

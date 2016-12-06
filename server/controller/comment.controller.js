@@ -26,7 +26,7 @@ module.exports = {
     },
     createNewComment: function(req, res, next) {
         comment.create({content: req.body.content, UserId: req.body.UserId, PostId: req.body.PostId}).then((data) => {
-            res.json(data)
+            // res.json(data)
         })
     },
     editComment: function(req, res, next) {

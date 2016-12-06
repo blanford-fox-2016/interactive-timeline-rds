@@ -18,7 +18,6 @@ export function loadPostProcess(content) {
                 console.log(err);
                 dispatch(loadPostFailure())
             } else {
-              console.log('body : ', res.body);
                 dispatch(loadPostSuccess(res.body))
             }
         })
@@ -63,6 +62,39 @@ export function addPostProcess(content) {
         })
     }
 }
+
+export function addCommentProcess(content, post, user_comment) {
+    return dispatch => {
+        dispatch(addComment(content, post, user_comment))
+        return request.post(SERVER_URL_COMMENT).type('form').send({content: content, UserId: user_comment.id, PostId: post.id}).set('Accept', 'application/json').end((err, res) => {
+            if (err) {
+              console.log('process error');
+                console.log(err);
+                dispatch(addCommentFailure())
+            } else {
+              console.log('process success');
+              console.log('success add process comment : ', res.body);
+                dispatch(addCommentSuccess(res.body))
+            }
+        })
+    }
+}
+
+export function addComment(contentParameter, post, user_comment) {
+    return {type: types.ADD_COMMENT, comment: contentParameter, post: post, user_comment: user_comment}
+}
+
+export function addCommentFailure() {
+  console.log('add fail');
+    return {type: types.ADD_COMMENT_FAILURE}
+}
+
+export function addCommentSuccess(content) {
+  console.log('add success : ', content);
+    return {type: types.ADD_COMMENT_SUCCESS, content: content}
+}
+
+
 
 export function deletePost(id) {
     return {type: types.DELETE_POST, id: id}
@@ -115,6 +147,33 @@ export function editPostProcess(id, content) {
         })
     }
 }
+
+export function editComment(post_id, comment_id, content) {
+    return {type: types.EDIT_COMMENT, PostId: post_id, CommentId: comment_id, content: content}
+}
+
+export function editCommentFailure() {
+    return {type: types.EDIT_COMMENT_FAILURE}
+}
+
+export function editCommentSuccess(id, content) {
+    return {type: types.EDIT_COMMENT_SUCCESS, id: id, content: content}
+}
+
+export function editCommentProcess(post_id, comment_id, content) {
+    return dispatch => {
+        dispatch(editComment(post_id, comment_id, content))
+        return request.put(SERVER_URL_COMMENT).type('form').send({id: comment_id, content: content}).set('Accept', 'application/json').end((err, res) => {
+            if (err) {
+                console.log(err);
+                dispatch(editCommentFailure())
+            } else {
+                dispatch(editCommentSuccess(res.body))
+            }
+        })
+    }
+}
+
 
 export function login(usernameLogin, passwordLogin) {
   console.log('login normal :', usernameLogin, passwordLogin);

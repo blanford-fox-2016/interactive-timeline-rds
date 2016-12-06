@@ -31,61 +31,6 @@ module.exports = {
         }).catch((err) => {
             res.json(err)
         })
-        // post.findAll({
-        //     include: [
-        //         {
-        //             model: user,
-        //             include: [
-        //                 {
-        //                     model: comment
-        //                 }
-        //             ]
-        //         }
-        //     ],
-        //     order: [
-        //         ['id', 'DESC']
-        //     ]
-        // }).then((data) => {
-        //     // res.json(data)
-        //     function(callback) {
-        //       let arrPost = []
-        //       for (var i = 0; i < data.length; i++) {
-        //         let email_user = data[i].dataValues.User.dataValues.email
-        //         let id_user = data[i].dataValues.User.dataValues.id
-        //         let image_user = data[i].dataValues.User.dataValues.image_url
-        //         let usrnm_user = data[i].dataValues.User.dataValues.username
-        //         let pwd_user = data[i].dataValues.User.dataValues.password
-        //         let usrid_user = data[i].dataValues.UserId
-        //         let post_content = data[i].dataValues.content
-        //         let post_id = data[i].dataValues.id
-        //         comment.findAll({
-        //           where: {
-        //             PostId : data[i].dataValues.id
-        //           }
-        //         }).then((comment_post) => {
-        //           let postWithComment = {
-        //             User: {
-        //               email: email_user,
-        //               id: id_user,
-        //               image_url: image_user,
-        //               username: usrnm_user,
-        //               password: pwd_user,
-        //             },
-        //             UserId: usrid_user,
-        //             content: post_content,
-        //             id: post_id,
-        //             Comment: comment_post
-        //           }
-        //           arrPost.push(postWithComment)
-        //         })
-        //       }
-        //       callback(arrPost)
-        //     }
-        //     // setTimeout(function() {
-        //     //   console.log('arrPost : ', arrPost);
-        //     // }, 5000)
-        //     res.json(arrPost)
-        // })
     },
     createNewPost: function(req, res, next) {
         post.create({content: req.body.content, UserId: req.body.user_id}).then((data) => {
