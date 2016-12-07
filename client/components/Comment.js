@@ -25,12 +25,12 @@ export default class Comment extends Component {
             return;
         } else {
           console.log('postData : ', this.props.postData);
-            this.props.editCommentProcess(this.props.postData.id, this.props.data.id, comment)
+            this.props.editCommentProcess(this.props.postData.id, this.props.data.id, comment, Auth.getUser())
             this.setState({editing: false})
         }
     }
     render() {
-        const {data} = this.props
+        const {data, deleteCommentProcess} = this.props
         if (this.state.editing) {
           return (
               <div className="container">
@@ -88,7 +88,7 @@ export default class Comment extends Component {
                                                     <button className="btn btn-success btn-xs btn-space raised" type="button" onClick={() => this.handleEditClick()}>
                                                         <span className="glyphicon glyphicon-edit"></span>     Edit Comment</button>
                                                     <button className="btn btn-danger raised btn-xs btn-space" type="button" onClick={() => confirm('Are you sure want to delete this post ?')
-                                                        ? deletePostProcess(data.id)
+                                                        ? deleteCommentProcess(data.id)
                                                         : ''}>
                                                         <span className="glyphicon glyphicon-trash"></span>
                                                         Delete</button>

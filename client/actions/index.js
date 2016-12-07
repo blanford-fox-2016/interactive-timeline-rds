@@ -122,6 +122,34 @@ export function deletePostProcess(id) {
     }
 }
 
+export function deleteComment(id) {
+    return {type: types.DELETE_COMMENT, id: id, }
+}
+
+export function deleteCommentFailure() {
+    return {type: types.DELETE_COMMENT_FAILURE}
+}
+
+export function deleteCommentSuccess(id) {
+    return {type: types.DELETE_COMMENT_SUCCESS}
+}
+
+export function deleteCommentProcess(id) {
+  console.log('id : ', id);
+    return dispatch => {
+        dispatch(deleteComment(id))
+        return request.del(SERVER_URL_COMMENT).send({id: id}).end((err, res) => {
+            if (err) {
+                console.log(err);
+                dispatch(deleteCommentFailure())
+            } else {
+                dispatch(deleteCommentSuccess(res.body))
+            }
+        })
+    }
+}
+
+
 export function editPost(id, content) {
     return {type: types.EDIT_POST, id: id, content: content}
 }
@@ -148,8 +176,8 @@ export function editPostProcess(id, content) {
     }
 }
 
-export function editComment(post_id, comment_id, content) {
-    return {type: types.EDIT_COMMENT, PostId: post_id, CommentId: comment_id, content: content}
+export function editComment(post_id, comment_id, content, user) {
+    return {type: types.EDIT_COMMENT, PostId: post_id, CommentId: comment_id, content: content, id: comment_id, User: user}
 }
 
 export function editCommentFailure() {
@@ -160,9 +188,9 @@ export function editCommentSuccess(id, content) {
     return {type: types.EDIT_COMMENT_SUCCESS, id: id, content: content}
 }
 
-export function editCommentProcess(post_id, comment_id, content) {
+export function editCommentProcess(post_id, comment_id, content, user) {
     return dispatch => {
-        dispatch(editComment(post_id, comment_id, content))
+        dispatch(editComment(post_id, comment_id, content, user))
         return request.put(SERVER_URL_COMMENT).type('form').send({id: comment_id, content: content}).set('Accept', 'application/json').end((err, res) => {
             if (err) {
                 console.log(err);

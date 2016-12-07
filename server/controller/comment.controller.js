@@ -11,9 +11,9 @@ module.exports = {
                 {
                     model: user,
                     include: [
-                      {
-                        model: post
-                      }
+                        {
+                            model: post
+                        }
                     ]
                 }
             ],
@@ -50,9 +50,11 @@ module.exports = {
             }
         }).then((data) => {
             if (data > 0) {
-                res.json({message: 'Delete successfully'})
+                console.log('Delete success');
+                // res.json({message: 'Delete successfully'})
             } else {
-                res.json({message: 'ID not found'})
+                console.log('ID not found !');
+                // res.json({message: 'ID not found'})
             }
         })
     }

@@ -42,12 +42,12 @@ export default class DataItem extends Component {
         if (!content) {
             return;
         } else {
-            this.props.editPostProcess(this.props.data.id, content)
+            this.props.editPostProcess(this.props.data.id, content, Auth.getUser())
             this.setState({editing: false})
         }
     }
     render() {
-        const {data, deletePostProcess, editPost, editCommentProcess} = this.props
+        const {data, deletePostProcess, editPost, editCommentProcess, deleteCommentProcess} = this.props
         if (this.state.editing) {
             return (
                 <div className = "container"><div className = "qa-message-list" id = "wallmessages"> <div className="message-item" id="m16">
@@ -191,7 +191,7 @@ export default class DataItem extends Component {
                       <span className="glyphicon glyphicon-trash"></span>   Delete</button></span>
                           </span>
                         </div>
-                        <CommentList data={data} editCommentProcess={editCommentProcess}/>
+                        <CommentList data={data} editCommentProcess={editCommentProcess} deleteCommentProcess={deleteCommentProcess}/>
                     </div>
                 </div>
             </div>
@@ -235,7 +235,7 @@ export default class DataItem extends Component {
                           </span>
                           </span>
                         </div>
-                        <CommentList data={data} editCommentProcess={editCommentProcess}/>
+                        <CommentList data={data} editCommentProcess={editCommentProcess} deleteCommentProcess={deleteCommentProcess}/>
                     </div>
                 </div>
             </div>
