@@ -10,7 +10,7 @@ import AuthPage from '../components/AuthPage'
 class App extends Component {
     render() {
         const {magicDataFromRedux, magicActionFromRedux, history} = this.props
-        if (Auth.isUserAuthenticated()) {
+        // if (Auth.isUserAuthenticated()) {
           return (
               <div>
                   <Navbar data={magicDataFromRedux} history={history}/>
@@ -25,11 +25,11 @@ class App extends Component {
                   </div>
               </div>
           )
-        } else {
-          return (
-            <AuthPage data={magicDataFromRedux} onLogin={magicActionFromRedux.loginProcess} onRegister={magicActionFromRedux.registerProcess} history={history}/>
-          )
-        }
+        // } else {
+        //   return (
+        //     <AuthPage data={magicDataFromRedux} onLogin={magicActionFromRedux.loginProcess} onRegister={magicActionFromRedux.registerProcess} history={history}/>
+        //   )
+        // }
     }
     componentDidMount() {
       this.props.magicActionFromRedux.loadPostProcess()
