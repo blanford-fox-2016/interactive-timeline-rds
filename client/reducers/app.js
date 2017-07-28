@@ -29,7 +29,7 @@ import {
   DELETE_COMMENT,
   DELETE_COMMENT_SUCCESS,
   DELETE_COMMENT_FAILURE
-} from '../constants/ActionTypes'
+} from '../actions/index.js'
 
 const initialState = []
 
