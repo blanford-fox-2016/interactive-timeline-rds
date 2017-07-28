@@ -1,4 +1,43 @@
-import * as types from '../constants/ActionTypes'
+export const LOAD_POST = 'LOAD_POST'
+export const LOAD_POST_SUCCESS = 'LOAD_POST_SUCCESS'
+export const LOAD_POST_FAILURE = 'LOAD_POST_FAILURE'
+
+export const ADD_POST = 'ADD_POST'
+export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS'
+export const ADD_POST_FAILURE = 'ADD_POST_FAILURE'
+
+export const EDIT_POST = 'EDIT_POST'
+export const EDIT_POST_SUCCESS = 'EDIT_POST_SUCCESS'
+export const EDIT_POST_FAILURE = 'EDIT_POST_FAILURE'
+
+export const DELETE_POST = 'DELETE_POST'
+export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS'
+export const DELETE_POST_FAILURE = 'DELETE_POST_FAILURE'
+
+export const LOGIN_PROCESS = 'LOGIN_PROCESS'
+export const LOGIN_PROCESS_SUCCESS = 'LOGIN_PROCESS_SUCCESS'
+export const LOGIN_PROCESS_FAILURE = 'LOGIN_PROCESS_FAILURE'
+
+export const REGISTER_PROCESS = 'REGISTER_PROCESS'
+export const REGISTER_PROCESS_SUCCESS = 'REGISTER_PROCESS_SUCCESS'
+export const REGISTER_PROCESS_FAILURE = 'REGISTER_PROCESS_FAILURE'
+
+export const LOAD_COMMENT = 'LOAD_COMMENT'
+export const LOAD_COMMENT_SUCCESS = 'LOAD_COMMENT_SUCCESS'
+export const LOAD_COMMENT_FAILURE = 'LOAD_COMMENT_FAILURE'
+
+export const ADD_COMMENT = 'ADD_COMMENT'
+export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS'
+export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE'
+
+export const EDIT_COMMENT = 'EDIT_COMMENT'
+export const EDIT_COMMENT_SUCCESS = 'EDIT_COMMENT_SUCCESS'
+export const EDIT_COMMENT_FAILURE = 'EDIT_COMMENT_FAILURE'
+
+export const DELETE_COMMENT = 'DELETE_COMMENT'
+export const DELETE_COMMENT_SUCCESS = 'DELETE_COMMENT_SUCCESS'
+export const DELETE_COMMENT_FAILURE = 'DELETE_COMMENT_FAILURE'
+
 import request from 'superagent'
 
 const SERVER_URL = 'http://localhost:3000/api/post'
@@ -7,7 +46,7 @@ const SERVER_URL_LOGIN = 'http://localhost:3000/api/auth/login'
 const SERVER_URL_REGISTER = 'http://localhost:3000/api/auth/register'
 
 export function loadPost() {
-    return {type: types.LOAD_POST}
+    return {type: LOAD_POST}
 }
 
 export function loadPostProcess(content) {
@@ -25,26 +64,26 @@ export function loadPostProcess(content) {
 }
 
 export function loadPostSuccess(content) {
-    return {type: types.LOAD_POST_SUCCESS, fromDatabase: content}
+    return {type: LOAD_POST_SUCCESS, fromDatabase: content}
 }
 
 export function loadPostFailure() {
-    return {type: types.LOAD_POST_FAILURE}
+    return {type: LOAD_POST_FAILURE}
 }
 
 export function addPost(contentParameter) {
   console.log('add post basic content param : ', contentParameter);
-    return {type: types.ADD_POST, content: contentParameter}
+    return {type: ADD_POST, content: contentParameter}
 }
 
 export function addPostFailure() {
   console.log('add fail');
-    return {type: types.ADD_POST_FAILURE}
+    return {type: ADD_POST_FAILURE}
 }
 
 export function addPostSuccess(content) {
   console.log('add success : ', content);
-    return {type: types.ADD_POST_SUCCESS, content: content}
+    return {type: ADD_POST_SUCCESS, content: content}
 }
 
 export function addPostProcess(content) {
@@ -81,31 +120,31 @@ export function addCommentProcess(content, post, user_comment) {
 }
 
 export function addComment(contentParameter, post, user_comment) {
-    return {type: types.ADD_COMMENT, comment: contentParameter, post: post, user_comment: user_comment}
+    return {type: ADD_COMMENT, comment: contentParameter, post: post, user_comment: user_comment}
 }
 
 export function addCommentFailure() {
   console.log('add fail');
-    return {type: types.ADD_COMMENT_FAILURE}
+    return {type: ADD_COMMENT_FAILURE}
 }
 
 export function addCommentSuccess(content) {
   console.log('add success : ', content);
-    return {type: types.ADD_COMMENT_SUCCESS, content: content}
+    return {type: ADD_COMMENT_SUCCESS, content: content}
 }
 
 
 
 export function deletePost(id) {
-    return {type: types.DELETE_POST, id: id}
+    return {type: DELETE_POST, id: id}
 }
 
 export function deletePostFailure() {
-    return {type: types.DELETE_POST_FAILURE}
+    return {type: DELETE_POST_FAILURE}
 }
 
 export function deletePostSuccess(id) {
-    return {type: types.DELETE_POST_SUCCESS}
+    return {type: DELETE_POST_SUCCESS}
 }
 
 export function deletePostProcess(id) {
@@ -123,15 +162,15 @@ export function deletePostProcess(id) {
 }
 
 export function deleteComment(id) {
-    return {type: types.DELETE_COMMENT, id: id, }
+    return {type: DELETE_COMMENT, id: id, }
 }
 
 export function deleteCommentFailure() {
-    return {type: types.DELETE_COMMENT_FAILURE}
+    return {type: DELETE_COMMENT_FAILURE}
 }
 
 export function deleteCommentSuccess(id) {
-    return {type: types.DELETE_COMMENT_SUCCESS}
+    return {type: DELETE_COMMENT_SUCCESS}
 }
 
 export function deleteCommentProcess(id) {
@@ -151,15 +190,15 @@ export function deleteCommentProcess(id) {
 
 
 export function editPost(id, content) {
-    return {type: types.EDIT_POST, id: id, content: content}
+    return {type: EDIT_POST, id: id, content: content}
 }
 
 export function editPostFailure() {
-    return {type: types.EDIT_POST_FAILURE}
+    return {type: EDIT_POST_FAILURE}
 }
 
 export function editPostSuccess(id, content) {
-    return {type: types.EDIT_POST_SUCCESS, id: id, content: content}
+    return {type: EDIT_POST_SUCCESS, id: id, content: content}
 }
 
 export function editPostProcess(id, content) {
@@ -177,15 +216,15 @@ export function editPostProcess(id, content) {
 }
 
 export function editComment(post_id, comment_id, content, user) {
-    return {type: types.EDIT_COMMENT, PostId: post_id, CommentId: comment_id, content: content, id: comment_id, User: user}
+    return {type: EDIT_COMMENT, PostId: post_id, CommentId: comment_id, content: content, id: comment_id, User: user}
 }
 
 export function editCommentFailure() {
-    return {type: types.EDIT_COMMENT_FAILURE}
+    return {type: EDIT_COMMENT_FAILURE}
 }
 
 export function editCommentSuccess(id, content) {
-    return {type: types.EDIT_COMMENT_SUCCESS, id: id, content: content}
+    return {type: EDIT_COMMENT_SUCCESS, id: id, content: content}
 }
 
 export function editCommentProcess(post_id, comment_id, content, user) {
@@ -205,7 +244,7 @@ export function editCommentProcess(post_id, comment_id, content, user) {
 
 export function login(usernameLogin, passwordLogin) {
   console.log('login normal :', usernameLogin, passwordLogin);
-    return {type: types.LOGIN_PROCESS, username: usernameLogin, password: passwordLogin}
+    return {type: LOGIN_PROCESS, username: usernameLogin, password: passwordLogin}
 }
 
 export function loginSuccess(userToken) {
@@ -213,12 +252,12 @@ export function loginSuccess(userToken) {
     console.log('userToken : ', userToken);
     if (userToken) {
         Auth.authenticateUser(userToken)
-        return {type: types.LOGIN_PROCESS_SUCCESS}
+        return {type: LOGIN_PROCESS_SUCCESS}
     } else {}
 }
 
 export function loginFailure() {
-    return {type: types.LOGIN_PROCESS_FAILURE}
+    return {type: LOGIN_PROCESS_FAILURE}
 }
 
 export function loginProcess(usernameLogin, passwordLogin) {
@@ -243,7 +282,7 @@ export function loginProcess(usernameLogin, passwordLogin) {
 
 export function register(name, usernameRegister, passwordRegister, email, image_url) {
     return {
-        type: types.REGISTER_PROCESS,
+        type: REGISTER_PROCESS,
         name: name,
         username: usernameRegister,
         password: passwordRegister,
@@ -255,14 +294,14 @@ export function register(name, usernameRegister, passwordRegister, email, image_
 export function registerSuccess(userToken) {
     if (userToken) {
       Auth.authenticateUser(userToken)
-      return {type: types.REGISTER_PROCESS_SUCCESS}
+      return {type: REGISTER_PROCESS_SUCCESS}
     } else {
       console.log('token not found. registration failed : /actions/index.js > 171');
     }
 }
 
 export function registerFailure() {
-    return {type: types.REGISTER_PROCESS_FAILURE}
+    return {type: REGISTER_PROCESS_FAILURE}
 }
 
 export function registerProcess(name, usernameRegister, passwordRegister, email, image_url) {
@@ -283,7 +322,7 @@ export function registerProcess(name, usernameRegister, passwordRegister, email,
 }
 
 export function loadComment() {
-    return {type: types.LOAD_COMMENT}
+    return {type: LOAD_COMMENT}
 }
 
 export function loadCommentProcess(content) {
@@ -302,9 +341,9 @@ export function loadCommentProcess(content) {
 
 export function loadCommentSuccess(content) {
   console.log('ajax :', content);
-    return {type: types.LOAD_COMMENT_SUCCESS, fromDatabaseComment: content}
+    return {type: LOAD_COMMENT_SUCCESS, fromDatabaseComment: content}
 }
 
 export function loadCommentFailure() {
-    return {type: types.LOAD_COMMENT_FAILURE}
+    return {type: LOAD_COMMENT_FAILURE}
 }
