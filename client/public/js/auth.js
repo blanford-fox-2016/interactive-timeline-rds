@@ -1,3 +1,4 @@
+import jwt_decode from "jwt-decode"
 // ---------------------------------------------------------------------------
 // AUTHENTICATION
 // ---------------------------------------------------------------------------
@@ -23,6 +24,7 @@ const Auth = {
         if (!token)
             return {}
         else {
+            console.log('token : ', token);
             return jwt_decode(token)
         }
     }
