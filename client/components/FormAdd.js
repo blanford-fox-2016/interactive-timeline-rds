@@ -7,12 +7,19 @@ export default class FormAdd extends Component {
       content: this.props.content || ''
     }
   }
+  
+  componentWillReceiveProps() {
+      console.log(this.state);
+  }
+  
   handleContentChange(e) {
-    this.setState({content: e.target.value})
+    this.setState({content: e.target.value}, ()=> console.log(this.state))
   }
   handleSubmit(e) {
+    console.log(e);
     e.preventDefault()
     let content = this.state.content.trim()
+    console.log(content);
     if (!content) {
       console.log('fail');
       return ;

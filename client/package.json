@@ -1,11 +1,13 @@
 {
-  "name": "phone-book-app",
+  "name": "Interactive-timeline",
   "version": "1.0.0",
   "description": "Client for Interactive Timeline RDS",
   "scripts": {
     "start": "node server.js",
     "test": "cross-env NODE_ENV=test mocha --recursive --compilers js:babel-register --require ./test/setup.js",
-    "test:watch": "npm test -- --watch"
+    "test:watch": "npm test -- --watch",
+    "webpack-dev": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/.bin/webpack-dev-server --config webpack.config.js",
+    "watch": "START_HOT=$START_HOT npm run webpack-dev"
   },
   "keywords": [
     "react",
@@ -15,7 +17,13 @@
   "author": "Ahyana Rizky",
   "license": "MIT",
   "dependencies": {
+    "babel": "^6.23.0",
+    "babel-core": "^6.25.0",
+    "babel-loader": "^6.4.1",
     "babel-polyfill": "^6.16.0",
+    "babel-preset-es2016": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "classnames": "^2.2.5",
     "express": "^4.14.0",
     "react": "^0.14.8",
@@ -28,22 +36,38 @@
     "superagent": "^3.0.0"
   },
   "devDependencies": {
+    "babel": "^6.23.0",
     "babel-core": "^6.18.2",
     "babel-loader": "^6.2.8",
+    "babel-polyfill": "^6.23.0",
     "babel-preset-es2015": "^6.18.0",
+    "babel-preset-es2016": "^6.24.1",
     "babel-preset-react": "^6.16.0",
     "babel-preset-react-hmre": "^1.1.1",
+    "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.18.0",
     "cross-env": "^1.0.8",
+    "css-loader": "^0.28.4",
+    "eslint": "^4.3.0",
+    "eslint-loader": "^1.9.0",
+    "eslint-plugin-react": "^7.1.0",
     "expect": "^1.20.2",
     "jsdom": "^5.6.1",
+    "json-loader": "^0.5.7",
+    "less": "^2.7.2",
+    "less-loader": "^4.0.5",
     "mocha": "^2.5.3",
     "node-libs-browser": "^0.5.3",
     "raw-loader": "^0.5.1",
     "react-addons-test-utils": "^0.14.8",
+    "redux-devtools": "^3.4.0",
+    "redux-logger": "^3.0.6",
+    "redux-persist": "^4.8.2",
+    "redux-saga": "^0.15.6",
     "style-loader": "^0.12.4",
-    "webpack": "^1.13.3",
+    "webpack": "^2.2.0-rc.3",
     "webpack-dev-middleware": "^1.8.4",
+    "webpack-dev-server": "^2.6.1",
     "webpack-hot-middleware": "^2.13.2"
   }
 }

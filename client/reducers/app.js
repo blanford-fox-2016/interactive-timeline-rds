@@ -34,7 +34,7 @@ import {
 const initialState = []
 
 export default function data(state = initialState, objFromUserAction) {
-    switch (objFromUserAction.type) {
+    switch (objFromUserAction) {
         case LOAD_POST:
             return []
 
